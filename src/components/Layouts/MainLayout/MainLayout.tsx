@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./MainLayout.module.scss";
+import { clsx } from "clsx";
 
 const Header = () => {
   return (
@@ -9,10 +10,23 @@ const Header = () => {
           <div className={styles.logo}> MilkHunters</div>
         </div>
         <div className={styles.search_wrapper}>
-          <input className={styles.search} />
+          <input className={styles.search} placeholder="Поиск..." />
         </div>
         <div className={styles.header_tools_wrapper}>
-          <div className={styles.header_tools}>Header Tools</div>
+          <div className={styles.header_tools}>
+            <i
+              className={clsx("fi fi-rr-bell", {
+                [styles.notifications]: true,
+              })}
+            ></i>
+
+            <figure className="image is-48x48">
+              <img
+                className="is-rounded"
+                src="https://bulma.io/images/placeholders/128x128.png"
+              />
+            </figure>
+          </div>
         </div>
       </div>
     </div>

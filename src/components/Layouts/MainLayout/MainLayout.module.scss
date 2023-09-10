@@ -1,10 +1,12 @@
 @import "../../../styles/index";
+@import "../../../theme/tokens.css";
 
 // MainLayout
 .layout_wrapper {
   width: 100%;
   height: 100vh;
   font-family: "Inter", sans-serif;
+  background: $app-body;
 }
 
 // Layout
@@ -31,7 +33,7 @@
 .header {
   grid-area: header;
   height: 60px;
-  border: 1px solid black;
+  background: white;
 }
 
 .header_layout {
@@ -40,7 +42,6 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
-  border: 1px solid black;
 }
 
 // Logo
@@ -54,9 +55,9 @@
 .logo {
   display: flex;
   align-items: center;
-  color: black;
   font-weight: 700;
   font-size: 30px;
+  color: #091540;
 }
 
 // Search
@@ -70,10 +71,18 @@
 
 .search {
   width: 600px;
-  height: 35px;
-  border-radius: 50px;
-  padding: 0 15px;
-  font-size: 20px;
+  height: 40px;
+  border-radius: 15px;
+  border: none;
+  background: #edeef0;
+  padding: 5px 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+// Notifications
+.notifications {
+  font-size: 25px;
 }
 
 // HeaderTools
@@ -83,6 +92,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.header_tools {
+  display: flex;
+  i {
+    margin-right: 30px;
+  }
 }
 
 // Sidebar

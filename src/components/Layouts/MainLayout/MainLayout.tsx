@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./MainLayout.module.scss";
 import { clsx } from "clsx";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -34,7 +35,94 @@ const Header = () => {
 };
 
 const Sidebar = () => {
-  return <div className={styles.sidebar}>Sidebar</div>;
+  const auth = true;
+  return (
+    <div className={styles.sidebar}>
+      {auth ? (
+        <div className={styles.items}>
+          <NavLink
+            to={"posts"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+          >
+            <i className="fi fi-rr-home"></i>
+            <div className={styles.name}>Главная</div>
+          </NavLink>
+          <NavLink
+            to={"aibryx"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+            end
+          >
+            <i className="fi fi-rr-user"></i>
+            <div className={styles.name}>Профиль</div>
+          </NavLink>
+          <NavLink
+            to={"search"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+          >
+            <i className="fi fi-rr-search"></i>
+            <div className={styles.name}>Поиск</div>
+          </NavLink>
+          <NavLink
+            to={"bookmarks"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+          >
+            <i className="fi fi-rr-bookmark"></i>
+            <div className={styles.name}>Закладки</div>
+          </NavLink>
+          <div className={clsx({ [styles.item]: true, [styles.create]: true })}>
+            <button
+              onClick={() => navigate("/blog/new")}
+              className={clsx("button is-primary is-fullwidth is-rounded", {
+                [styles.create_btn]: true,
+              })}
+            >
+              Написать
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.items}>
+          <NavLink
+            to={"posts"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+          >
+            <i className="fi fi-rr-home"></i>
+            <div className={styles.name}>Главная</div>
+          </NavLink>
+          <NavLink
+            to={"search"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+            end
+          >
+            <i className="fi fi-rr-search"></i>
+            <div className={styles.name}>Поиск</div>
+          </NavLink>
+          <NavLink
+            to={"/auth/login"}
+            className={({ isActive }) =>
+              clsx({ [styles.item]: true, [styles.active]: isActive })
+            }
+            end
+          >
+            <i className="fi fi-rr-user"></i>
+            <div className={styles.name}>Войти</div>
+          </NavLink>
+        </div>
+      )}
+    </div>
+  );
 };
 
 const MobileSidebar = () => {

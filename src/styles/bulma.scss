@@ -1,5 +1,5 @@
 @charset "utf-8";
-@use 'index';
+@import './index.scss';
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
@@ -17,14 +17,12 @@
 }
 
 $family-sans-serif: "Inter", sans-serif;
-$primary: index.$app-primary;
+$primary: $app-primary;
 
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
-// Update some of Bulma's component variables
 $body-family: "Inter", sans-serif;
-//$body-background-color: index.$app-body;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;

@@ -1,11 +1,22 @@
 import React from "react";
 import styles from "./MainLayout.module.scss";
-import clsx from "clsx";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router";
 
 const Header = () => {
-  return <div className={styles.header}>Header</div>;
+  return (
+    <div className={styles.header}>
+      <div className={styles.header_layout}>
+        <div className={styles.logo_wrapper}>
+          <div className={styles.logo}> MilkHunters</div>
+        </div>
+        <div className={styles.search_wrapper}>
+          <input className={styles.search} />
+        </div>
+        <div className={styles.header_tools_wrapper}>
+          <div className={styles.header_tools}>Header Tools</div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const Sidebar = () => {

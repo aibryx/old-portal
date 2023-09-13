@@ -1,0 +1,17 @@
+@import "@/styles/index";
+
+// Login Wrapper
+.wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+// Login
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: white;
+}

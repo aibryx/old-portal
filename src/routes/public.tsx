@@ -1,6 +1,7 @@
 import { MainLayout } from "../components/Layouts/MainLayout/MainLayout.tsx";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { Suspense, useEffect } from "react";
+import { AuthRoutes } from "../features/auth/routes/AuthRoutes.tsx";
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const Demo = () => {
 
   useEffect(() => {
     if (pathname === "/") {
-      navigate("/home");
+      navigate("/articles");
     }
   }, [pathname]);
 
@@ -32,6 +33,6 @@ export const publicRoutes = [
   },
   {
     path: "/auth/*",
-    element: <>FooBar</>,
+    element: <AuthRoutes />,
   },
 ];

@@ -4,28 +4,36 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
+// Global Options
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+// FlatIcons Global Options
 .fi {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-$family-sans-serif: "Inter", sans-serif;
-$primary: $app-primary;
+// Colors
+$primary: $app-primary-color;
 
-$widescreen-enabled: false;
-$fullhd-enabled: false;
-
+// Body
 $body-family: "Inter", sans-serif;
-$control-border-width: 2px;
-$input-border-color: transparent;
+$body-background-color: $app-body-color;
+
+// Input
 $input-shadow: none;
+$input-focus-box-shadow-size: 0px;
+$input-focus-box-shadow-color: transparent;
+$input-focus-border-color: transparent;
+$input-radius: 10px;
+input:focus {
+  outline: none;
+}
 
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
@@ -34,6 +42,7 @@ $input-shadow: none;
 @import "../../node_modules/bulma/sass/elements/container.sass";
 @import "../../node_modules/bulma/sass/elements/title.sass";
 @import "../../node_modules/bulma/sass/form/_all.sass";
+@import "../../node_modules/bulma/sass/form/input-textarea";
 @import "../../node_modules/bulma/sass/components/navbar.sass";
 @import "../../node_modules/bulma/sass/layout/hero.sass";
 @import "../../node_modules/bulma/sass/layout/section.sass";

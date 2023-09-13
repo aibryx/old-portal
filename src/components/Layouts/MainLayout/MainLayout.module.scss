@@ -6,7 +6,6 @@
   width: 100%;
   height: 100vh;
   font-family: "Inter", sans-serif;
-  background: $app-body;
 }
 
 // Layout
@@ -55,8 +54,10 @@
   display: flex;
   align-items: center;
   font-weight: 700;
+  width: 250px;
   font-size: 30px;
   color: #091540;
+  margin-left: 40px;
 }
 
 // Search
@@ -72,11 +73,17 @@
   width: 600px;
   height: 40px;
   border-radius: 15px;
-  border: none;
+  border: 1px solid transparent;
   background: #edeef0;
   padding: 5px 20px;
   font-size: 15px;
   font-weight: 600;
+}
+
+.search:focus {
+  outline: none;
+  background: transparent;
+  border: 1px solid grey;
 }
 
 // Notifications
@@ -118,21 +125,21 @@
   font-weight: 500;
   border-radius: 12px;
   cursor: pointer;
-  color: $app-primary;
+  color: $app-primary-color;
 }
 
 .active {
   background: #edeef0;
-  color: $app-primary;
+  color: $app-primary-color;
   font-weight: 700;
   i {
-    color: $app-primary
+    color: $app-primary-color;
   }
 }
 
 .item:hover {
   background: white;
-  color: $app-primary;
+  color: $app-primary-color;
 }
 
 .item:not(:last-child) {
@@ -217,6 +224,9 @@
   }
   .header_tools_wrapper {
     width: 120px;
+    i {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -227,6 +237,14 @@
     width: 100%;
   }
 
+  .header_tools {
+    margin-left: 15px;
+    i {
+      margin-right: 15px;
+      margin-left: 10px;
+    }
+  }
+
   .layout {
     grid-template-columns: 3fr 7fr;
   }
@@ -234,11 +252,13 @@
   .logo_wrapper {
     width: 30vw;
   }
+
   .search_wrapper {
-    width: 500px;
+    width: 55vw;
   }
+
   .header_tools_wrapper {
-    width: 120px;
+    width: auto;
   }
 }
 
@@ -272,6 +292,7 @@
   .logo_wrapper {
     width: 200px;
   }
+
   .logo {
     font-size: 25px;
   }

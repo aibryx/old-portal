@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./MainLayout.module.scss";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
+import "bulma/css/bulma.min.css";
 
 const Header = () => {
+  const auth = false;
   return (
     <div className={styles.header}>
       <div className={styles.header_layout}>
@@ -21,10 +23,10 @@ const Header = () => {
               })}
             ></i>
 
-            <figure className="image is-48x48">
+            <figure className="image is-50x50">
               <img
                 className="is-rounded"
-                src="https://bulma.io/images/placeholders/128x128.png"
+                src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/48x48/-/format/webp"
               />
             </figure>
           </div>
@@ -35,13 +37,13 @@ const Header = () => {
 };
 
 const Sidebar = () => {
-  const auth = true;
+  const auth = false;
   return (
     <div className={styles.sidebar}>
       {auth ? (
         <div className={styles.items}>
           <NavLink
-            to={"posts"}
+            to={"articles"}
             className={({ isActive }) =>
               clsx({ [styles.item]: true, [styles.active]: isActive })
             }
@@ -78,20 +80,20 @@ const Sidebar = () => {
             <div className={styles.name}>Закладки</div>
           </NavLink>
           <div className={clsx({ [styles.item]: true, [styles.create]: true })}>
-            <button
-              onClick={() => navigate("/blog/new")}
+            <NavLink
+              to={"/new"}
               className={clsx("button is-primary is-fullwidth is-rounded", {
                 [styles.create_btn]: true,
               })}
             >
               Написать
-            </button>
+            </NavLink>
           </div>
         </div>
       ) : (
         <div className={styles.items}>
           <NavLink
-            to={"posts"}
+            to={"articles"}
             className={({ isActive }) =>
               clsx({ [styles.item]: true, [styles.active]: isActive })
             }
@@ -133,8 +135,8 @@ type ViewProps = {
   children: React.ReactNode;
 };
 
-const View = () => {
-  return <main className={styles.view}>View</main>;
+const View = ({ children }: ViewProps) => {
+  return <main className={styles.view}>{children}</main>;
 };
 
 const Live = () => {
@@ -156,7 +158,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       <div className={styles.container}>
         <div className={styles.layout}>
           <Sidebar />
-          <View />
+          <View>{children}</View>
           <Live />
           <Footer />
           <MobileSidebar />

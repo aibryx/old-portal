@@ -3,7 +3,7 @@
 
 // MainLayout
 .layout_wrapper {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   font-family: "Inter", sans-serif;
 }
@@ -31,7 +31,8 @@
 .header {
   grid-area: header;
   height: 60px;
-  background: white;
+  background: $app-header-color;
+  border-bottom: 1px solid $app-primary-color;
 }
 
 .header_layout {
@@ -43,73 +44,58 @@
 }
 
 // Logo
-.logo_wrapper {
+.logo {
   width: 320px;
-  height: 60px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.logo {
+.logo_inner {
   display: flex;
   align-items: center;
-  font-weight: 700;
+  justify-content: center;
   width: 250px;
-  font-size: 30px;
-  color: #091540;
-  margin-left: 40px;
+  height: 40px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 33px;
+  //background: $app-primary-color;
+  color: $app-primary-color;
+  border-radius: $app-main-radius;
 }
 
 // Search
-.search_wrapper {
-  width: 640px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .search {
-  width: 600px;
-  height: 40px;
-  border-radius: 15px;
-  border: 1px solid transparent;
-  background: #edeef0;
-  padding: 5px 20px;
-  font-size: 15px;
-  font-weight: 600;
+  width: 640px;
 }
 
-.search:focus {
-  outline: none;
-  background: transparent;
-  border: 1px solid grey;
-}
-
-// Notifications
-.notifications {
-  font-size: 25px;
-}
-
-// HeaderTools
-.header_tools_wrapper {
+// Right
+.right {
   width: 320px;
-  height: 60px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.header_tools {
-  display: flex;
-  i {
-    margin-right: 30px;
-  }
+.user {
+  margin: 0 30px;
+}
+
+.notifications {
+  font-size: 26px;
+  border-radius: 50px;
+  padding: 10px;
+}
+
+.notifications:hover {
+  background: $app-hover-color;
 }
 
 // Sidebar
 .sidebar {
   grid-area: sidebar;
+  //border: 1px solid black;
 }
 
 .items {
@@ -123,13 +109,13 @@
   padding: 5px 20px;
   font-size: 21px;
   font-weight: 500;
-  border-radius: 12px;
+  border-radius: $app-main-radius;
   cursor: pointer;
   color: $app-primary-color;
 }
 
 .active {
-  background: #edeef0;
+  background: $app-hover-color;
   color: $app-primary-color;
   font-weight: 700;
   i {
@@ -138,7 +124,7 @@
 }
 
 .item:hover {
-  background: white;
+  background: $app-hover-color;
   color: $app-primary-color;
 }
 
@@ -176,13 +162,23 @@
 // Live
 .live {
   grid-area: live;
-  border: 1px solid black;
+  //border: 1px solid black;
 }
 
 // Footer
 .footer {
   grid-area: footer;
-  border: 1px solid black;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px;
+  width: 320px;
+  //border: 2px solid black;
+  font-size: 12px;
+}
+
+.footer_inner {
+  width: 220px;
 }
 
 // Mobile Sidebar
@@ -208,8 +204,12 @@
     width: 1023px;
   }
 
-  .live {
+  .live, .right {
     display: none;
+  }
+
+  .search {
+    width: 700px;
   }
 
   .layout {
@@ -219,56 +219,42 @@
       "footer view";
   }
 
-  .search_wrapper {
-    width: 550px;
-  }
-  .header_tools_wrapper {
-    width: 120px;
-    i {
-      margin-right: 10px;
-    }
-  }
 }
 
 // Tablet Begin
 @media (max-width: 1023px) {
   .header_layout,
   .container {
-    width: 100%;
-  }
-
-  .header_tools {
-    margin-left: 15px;
-    i {
-      margin-right: 15px;
-      margin-left: 10px;
-    }
+    width: 884px;
   }
 
   .layout {
     grid-template-columns: 3fr 7fr;
   }
 
-  .logo_wrapper {
+  .logo {
     width: 30vw;
   }
 
-  .search_wrapper {
-    width: 55vw;
-  }
-
-  .header_tools_wrapper {
-    width: auto;
+  .search {
+    width: 70%;
+    margin: 0 10px;
   }
 }
 
 // Mobile Begin
 @media (max-width: 915px) {
+  // Container;
+  .layout_wrapper, .container, .header_layout {
+    width: 100%;
+  }
+
   // DisplayNone
   .sidebar,
   .footer,
   .search_wrapper,
-  .header_tools_wrapper {
+  .header_tools_wrapper,
+  .search {
     display: none;
   }
 
@@ -285,16 +271,25 @@
   // View
   .view {
     height: calc(100vh - 60px);
+    width: 100vw;
     padding: 10px 10px 55px 10px;
   }
 
   // Logo
-  .logo_wrapper {
-    width: 200px;
+  .logo {
+    width: auto;
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 
-  .logo {
+  .logo_inner {
+    justify-content: flex-start;
     font-size: 25px;
   }
+}
 
+// Mini mobile
+@media (max-width: 300px) {
+  // todo
 }

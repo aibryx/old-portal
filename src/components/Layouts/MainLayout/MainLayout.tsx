@@ -5,30 +5,29 @@ import { NavLink } from "react-router-dom";
 import "bulma/css/bulma.min.css";
 
 const Header = () => {
-  const auth = false;
   return (
     <div className={styles.header}>
       <div className={styles.header_layout}>
-        <div className={styles.logo_wrapper}>
-          <div className={styles.logo}> MilkHunters</div>
+        <div className={styles.logo}>
+          <div className={styles.logo_inner}>MilkHunters</div>
         </div>
-        <div className={styles.search_wrapper}>
-          <input className={styles.search} placeholder="Поиск..." />
+        <div className={styles.search}>
+          <div className="control has-icons-left has-icons-right">
+            <input className="input" type="email" placeholder="Поиск..." />
+            <span className="icon is-small is-left">
+              <i className="fi fi-rr-search"></i>
+            </span>
+          </div>
         </div>
-        <div className={styles.header_tools_wrapper}>
-          <div className={styles.header_tools}>
-            <i
-              className={clsx("fi fi-rr-bell", {
-                [styles.notifications]: true,
-              })}
-            ></i>
-
-            <figure className="image is-50x50">
-              <img
-                className="is-rounded"
-                src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/48x48/-/format/webp"
-              />
-            </figure>
+        <div className={styles.right}>
+          <div className={styles.notifications}>
+            <i className="fi fi-rr-bell"></i>
+          </div>
+          <div className={clsx("image is-48x48", [styles.user])}>
+            <img
+              className={clsx("is-rounded", [styles.avatar])}
+              src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/72x72/-/format/webp"
+            />
           </div>
         </div>
       </div>
@@ -37,7 +36,7 @@ const Header = () => {
 };
 
 const Sidebar = () => {
-  const auth = false;
+  const auth = true;
   return (
     <div className={styles.sidebar}>
       {auth ? (
@@ -88,6 +87,14 @@ const Sidebar = () => {
             >
               Написать
             </NavLink>
+            {/*<NavLink*/}
+            {/*  to={"/playground"}*/}
+            {/*  className={clsx("button is-primary is-fullwidth is-rounded", {*/}
+            {/*    [styles.create_btn]: true,*/}
+            {/*  })}*/}
+            {/*>*/}
+            {/*  Playground*/}
+            {/*</NavLink>*/}
           </div>
         </div>
       ) : (
@@ -144,7 +151,15 @@ const Live = () => {
 };
 
 const Footer = () => {
-  return <div className={styles.footer}>Footer</div>;
+  return (
+    <div className={styles.footer}>
+      <div className={styles.footer_inner}>
+        Условия предоставления услуг Политика конфиденциальности Политика в
+        отношении файлов Cookie Специальные возможности Информация о рекламе Еще
+        © 2023 MilkHunters Corp.
+      </div>
+    </div>
+  );
 };
 
 type MainLayoutProps = {

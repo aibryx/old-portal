@@ -11,6 +11,8 @@
   box-sizing: border-box;
 }
 
+$radius: $app-main-radius;
+
 // FlatIcons Global Options
 .fi {
   display: flex;
@@ -25,22 +27,18 @@ $primary: $app-primary-color;
 $body-family: "Inter", sans-serif;
 $body-background-color: $app-body-color;
 
-// Input
-$input-shadow: none;
-$input-focus-box-shadow-size: 0px;
-$input-focus-box-shadow-color: transparent;
-$input-focus-border-color: transparent;
-$input-radius: 10px;
-input:focus {
-  outline: none;
-}
+// Button
+$button-focus-box-shadow-size: 0px;
+$button-focus-box-shadow-color: transparent;
 
-// Import only what you need from Bulma
+// Input
+$input-focus-box-shadow-color: transparent;
+$input-focus-border-color: $primary;
+$input-icon-active-color: $primary;
+
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
 @import "../../node_modules/bulma/sass/elements/button.sass";
-@import "../../node_modules/bulma/sass/elements/container.sass";
-@import "../../node_modules/bulma/sass/elements/title.sass";
 @import "../../node_modules/bulma/sass/form/_all.sass";
 @import "../../node_modules/bulma/sass/form/input-textarea";
 @import "../../node_modules/bulma/sass/components/navbar.sass";

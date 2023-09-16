@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=Playground.module.css.map */

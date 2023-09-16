@@ -201,10 +201,9 @@
     grid-template-columns: 3fr 7fr;
   }
   .logo {
-    width: 30vw;
+    width: 45vw;
   }
   .search {
-    width: 70%;
     margin: 0 10px;
   }
 }

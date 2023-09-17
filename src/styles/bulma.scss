@@ -24,7 +24,7 @@ $radius: $app-main-radius;
 $primary: $app-primary-color;
 
 // Body
-$body-family: "Inter", sans-serif;
+$body-family: $app-body-font;
 $body-background-color: $app-body-color;
 
 // Button
@@ -36,11 +36,20 @@ $input-focus-box-shadow-color: transparent;
 $input-focus-border-color: $primary;
 $input-icon-active-color: $primary;
 
+// Dropdown
+$dropdown-item-hover-background-color: $app-hover-color;
+$dropdown-content-radius: $radius;
+$dropdown-menu-min-width: 200px;
+$dropdown-content-offset: 8px;
+$dropdown-content-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+
+
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
 @import "../../node_modules/bulma/sass/elements/button.sass";
 @import "../../node_modules/bulma/sass/form/_all.sass";
 @import "../../node_modules/bulma/sass/form/input-textarea";
 @import "../../node_modules/bulma/sass/components/navbar.sass";
+@import "../../node_modules/bulma/sass/components/dropdown";
 @import "../../node_modules/bulma/sass/layout/hero.sass";
 @import "../../node_modules/bulma/sass/layout/section.sass";

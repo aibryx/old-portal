@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./MainLayout.module.scss";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
 import "bulma/css/bulma.min.css";
 
 const Header = () => {
+  const [isUserDropdownActive, setIsUserDropdownActive] =
+    useState<boolean>(true);
+
+  const changeUserDropdownState = () => {
+    setIsUserDropdownActive(!isUserDropdownActive);
+    console.log(isUserDropdownActive);
+    console.log(userDropdownClass);
+  };
+
+  let userDropdownClass = "";
+  if (isUserDropdownActive) userDropdownClass += "is-active";
+
   return (
     <div className={styles.header}>
       <div className={styles.header_layout}>
@@ -24,10 +36,29 @@ const Header = () => {
             <i className="fi fi-rr-bell"></i>
           </div>
           <div className={clsx("image is-48x48", [styles.user])}>
-            <img
-              className={clsx("is-rounded", [styles.avatar])}
-              src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/72x72/-/format/webp"
-            />
+            <div className={clsx("dropdown is-right", [userDropdownClass])}>
+              <div className="dropdown-trigger">
+                <img
+                  className={clsx("is-rounded", [styles.avatar])}
+                  src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/72x72/-/format/webp"
+                  onClick={changeUserDropdownState}
+                />
+              </div>
+              <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                <div className="dropdown-content">
+                  <a href="#" className="dropdown-item">
+                    Профиль
+                  </a>
+                  <a href="#" className="dropdown-item">
+                    Настройки
+                  </a>
+                  <hr className="dropdown-divider" />
+                  <a href="#" className="dropdown-item">
+                    Выйти
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

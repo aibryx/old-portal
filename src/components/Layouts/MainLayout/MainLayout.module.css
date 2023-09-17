@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-@import "../../../theme/tokens.css";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap");
 .layout_wrapper {
   width: 100vw;
   height: 100vh;
@@ -24,8 +24,8 @@
 .header {
   grid-area: header;
   height: 60px;
-  background: hsl(0, 0%, 98%);
-  border-bottom: 1px solid #04145c;
+  background: white;
+  border-bottom: 1px solid #79767D;
 }
 
 .header_layout {
@@ -52,6 +52,7 @@
   font-weight: bold;
   text-align: center;
   font-size: 33px;
+  font-family: "Space Grotesk", sans-serif;
   color: #04145c;
   border-radius: 12px;
 }
@@ -68,11 +69,11 @@
 }
 
 .user {
-  margin: 0 30px;
+  margin: 0 30px 0 10px;
 }
 
 .notifications {
-  font-size: 26px;
+  font-size: 30px;
   border-radius: 50px;
   padding: 10px;
 }
@@ -102,7 +103,7 @@
 }
 
 .active {
-  background: #edeef0;
+  background: white;
   color: #04145c;
   font-weight: 700;
 }
@@ -111,7 +112,7 @@
 }
 
 .item:hover {
-  background: #edeef0;
+  background: white;
   color: #04145c;
 }
 
@@ -140,12 +141,17 @@
 }
 
 .view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-area: view;
-  border: 1px solid black;
   height: 100%;
 }
 
 .live {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-area: live;
 }
 

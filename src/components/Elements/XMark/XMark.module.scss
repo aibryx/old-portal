@@ -1,0 +1,15 @@
+@import '../../../styles/index';
+
+// XMark
+.xmark {
+  padding: 12px;
+  border-radius: 100px;
+  font-size: 19px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.xmark:hover {
+  background: $app-hover-color;
+}

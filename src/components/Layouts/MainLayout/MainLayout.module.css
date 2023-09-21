@@ -25,7 +25,7 @@
   grid-area: header;
   height: 60px;
   background: white;
-  border-bottom: 1px solid #cac5cd;
+  border-bottom: 1px solid #eeeeee;
 }
 
 .header_layout {
@@ -56,12 +56,14 @@
   text-align: center;
   font-size: 33px;
   font-family: "Space Grotesk", sans-serif;
-  color: #04145c;
+  color: black;
   border-radius: 12px;
 }
 .logo_inner img {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+  border-radius: 50px;
 }
 
 .search {
@@ -74,12 +76,12 @@
 .right {
   width: 320px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
 .user {
-  margin: 0 30px 0 10px;
+  margin: 0 0 0 10px;
 }
 
 .notifications {
@@ -89,7 +91,7 @@
 }
 
 .notifications:hover {
-  background: #edeef0;
+  background: #eeeeee;
 }
 
 .sidebar {
@@ -109,21 +111,21 @@
   font-weight: 500;
   border-radius: 12px;
   cursor: pointer;
-  color: #04145c;
+  color: black;
 }
 
 .active {
   background: white;
-  color: #04145c;
+  color: black;
   font-weight: 700;
 }
 .active i {
-  color: #04145c;
+  color: black;
 }
 
 .item:hover {
   background: white;
-  color: #04145c;
+  color: black;
 }
 
 .item:not(:last-child) {
@@ -198,7 +200,7 @@
   right: 5px;
   color: white;
   border-radius: 30px;
-  background: #04145c;
+  background: black;
   padding: 15px;
   font-size: 19px;
 }
@@ -215,7 +217,7 @@
 }
 
 .mobile_active {
-  color: #04145c;
+  color: black;
   background: none;
 }
 

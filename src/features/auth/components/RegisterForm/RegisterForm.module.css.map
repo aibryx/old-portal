@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"RegisterForm.module.css"}
+{"version":3,"sourceRoot":"","sources":["../../../../styles/index.scss","RegisterForm.module.scss"],"names":[],"mappings":"AAAQ;AACA;ACER;EACE;EACA;EACA;EACA;EACA;;;AAIF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;;AAEF;EACE;EACA;EACA","file":"RegisterForm.module.css"}

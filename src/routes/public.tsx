@@ -1,5 +1,4 @@
 import { AuthRoutes } from '../features/auth/routes/AuthRoutes.tsx';
-import { Playground } from '../features/auth/components/PlayGround/Playground.tsx';
 import { AppEnter } from '../components/Layouts/AppEnter/AppEnter.tsx';
 
 export const publicRoutes = [
@@ -14,9 +13,5 @@ export const publicRoutes = [
 	{
 		path: '/auth/*',
 		element: <AuthRoutes />,
-	},
-	{
-		path: '/playground',
-		element: <Playground />,
 	},
 ];

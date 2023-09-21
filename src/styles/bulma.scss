@@ -11,6 +11,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 $radius: $app-main-radius;
 
 // FlatIcons Global Options

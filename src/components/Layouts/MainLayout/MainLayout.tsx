@@ -10,10 +10,11 @@ type HeaderProps = {
 };
 
 const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) => {
+	const auth = false;
 	let userDropdownClass = '';
 	if (isUserDropdownActive) userDropdownClass += 'is-active';
 
-	const changeUserDropdownState = (e: React.MouseEvent<HTMLDivElement>) => {
+	const changeUserDropdownState = (e: React.MouseEvent<HTMLImageElement>) => {
 		setIsUserDropdownActive((i) => !i);
 		e.stopPropagation();
 	};
@@ -23,7 +24,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) 
 			<div className={styles.header_layout}>
 				<div className={styles.logo}>
 					<div className={styles.logo_inner}>
-						<img src="../../../../public/logo.png" />
+						<img src="../../../../public/main_logo.svg" />
 						MilkHunters
 					</div>
 				</div>
@@ -36,34 +37,44 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) 
 					</div>
 				</div>
 				<div className={styles.right}>
-					<div className={styles.notifications}>
-						<i className="fi fi-rr-bell"></i>
-					</div>
-					<div className={clsx('image is-48x48', [styles.user])}>
-						<div className={clsx('dropdown is-right', [userDropdownClass])}>
-							<div className="dropdown-trigger">
-								<img
-									className={clsx('is-rounded', [styles.avatar])}
-									src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/72x72/-/format/webp"
-									onClick={(event) => changeUserDropdownState(event)}
-								/>
+					{auth ? (
+						<>
+							<div className={styles.notifications}>
+								<i className="fi fi-rr-bell"></i>
 							</div>
-							<div className="dropdown-menu" id="dropdown-menu" role="menu">
-								<div className="dropdown-content">
-									<a href="#" className="dropdown-item">
-										Профиль
-									</a>
-									<a href="#" className="dropdown-item">
-										Настройки
-									</a>
-									<hr className="dropdown-divider" />
-									<a href="#" className="dropdown-item">
-										Выйти
-									</a>
+							<div className={clsx('image is-48x48', [styles.user])}>
+								<div className={clsx('dropdown is-right', [userDropdownClass])}>
+									<div className="dropdown-trigger">
+										<img
+											className={clsx('is-rounded', [styles.avatar])}
+											src="https://leonardo.osnova.io/1232c2f0-0bcd-5561-9a17-b8a1d0edaef4/-/scale_crop/72x72/-/format/webp"
+											onClick={(event) => changeUserDropdownState(event)}
+										/>
+									</div>
+									<div className="dropdown-menu" id="dropdown-menu" role="menu">
+										<div className="dropdown-content">
+											<a href="#" className="dropdown-item">
+												Профиль
+											</a>
+											<a href="#" className="dropdown-item">
+												Настройки
+											</a>
+											<hr className="dropdown-divider" />
+											<a href="#" className="dropdown-item">
+												Выйти
+											</a>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</>
+					) : (
+						<>
+							<NavLink to={'auth/login'} className="button is-primary">
+								Войти
+							</NavLink>
+						</>
+					)}
 				</div>
 			</div>
 		</div>
@@ -71,7 +82,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) 
 };
 
 const Sidebar = () => {
-	const auth = true;
+	const auth = false;
 	return (
 		<div className={styles.sidebar}>
 			{auth ? (
@@ -152,16 +163,6 @@ const Sidebar = () => {
 					>
 						<i className="fi fi-rr-search"></i>
 						<div className={styles.name}>Поиск</div>
-					</NavLink>
-					<NavLink
-						to={'/auth/login'}
-						className={({ isActive }) =>
-							clsx({ [styles.item]: true, [styles.active]: isActive })
-						}
-						end
-					>
-						<i className="fi fi-rr-user"></i>
-						<div className={styles.name}>Войти</div>
 					</NavLink>
 				</div>
 			)}

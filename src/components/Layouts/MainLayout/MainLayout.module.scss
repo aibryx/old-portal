@@ -31,7 +31,7 @@
 	grid-area: header;
 	height: 60px;
 	background: $app-header-color;
-	border-bottom: 1px solid #cac5cd;
+	border-bottom: 1px solid $app-hover-color;
 }
 
 .header_layout {
@@ -67,8 +67,10 @@
 	color: $app-primary-color;
 	border-radius: $app-main-radius;
 	img {
-		width: 55px;
-		height: 55px;
+		width: 50px;
+		height: 50px;
+		margin-right: 5px;
+		border-radius: 50px;
 	}
 }
 
@@ -84,12 +86,12 @@
 .right {
 	width: 320px;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: center;
 }
 
 .user {
-	margin: 0 30px 0 10px;
+	margin: 0 0 0 10px;
 }
 
 .notifications {
@@ -246,7 +248,7 @@
 		width: 1023px;
 	}
 
-	// DisplayNone
+	// Display None
 	.live,
 	.right {
 		display: none;
@@ -298,7 +300,7 @@
 		width: 100%;
 	}
 
-	// DisplayNone
+	// Display None
 	.sidebar,
 	.footer,
 	.search_wrapper,
@@ -312,7 +314,7 @@
 		grid-template-areas: 'view view';
 	}
 
-	// MobileSidebar
+	// Mobile Sidebar
 	.mobile_sidebar {
 		display: flex;
 	}
@@ -342,7 +344,7 @@
 	}
 }
 
-// Mini mobile
+// MiniMobile
 @media (max-width: 300px) {
 	// todo
 }

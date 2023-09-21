@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap");
+.xmark {
+  padding: 12px;
+  border-radius: 100px;
+  font-size: 19px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.xmark:hover {
+  background: #eeeeee;
+}
+
+/*# sourceMappingURL=XMark.module.css.map */

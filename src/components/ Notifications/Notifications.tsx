@@ -3,7 +3,8 @@ import styles from './Notifications.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store.ts';
 import { deleteNotification } from '@/components/ Notifications/NotificationsSlice.ts';
-import {useEffect} from "react";
+import { useEffect } from 'react';
+
 
 export const Notifications = () => {
 	const notifications = useSelector((state: RootState) => state.notifications.notifications);
@@ -21,9 +22,9 @@ export const Notifications = () => {
 
 	return (
 		<div className={styles.notifications}>
-			{notifications.map((n) => (
-				<Notification message={n.message} key={n.id} />
-			))}
+				{notifications.map((n) => (
+					<Notification message={n.message} key={n.id} />
+				))}
 		</div>
 	);
 };

@@ -18,10 +18,12 @@ type LoginFormProps = {
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>('aibryx');
 	const [password, setPassword] = useState<string>('qwerty123');
-	const [signIn, { isLoading, isError }] = useSignInMutation();
+
+	const [signIn, { isLoading }] = useSignInMutation();
 
 	const trySignIn = async () => {
 		const response = await signIn({
@@ -33,14 +35,15 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 			onSuccess();
 			return;
 		}
+
 		dispatch(addNotification({ id: nanoid(), message: 'Неверный логин или пароль!' }));
 
 		console.log(response);
 	};
 
-	const handlePasswordVisibleClick = (e: React.MouseEvent<HTMLElement>) => {
+	const handlePasswordVisibleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setIsPasswordVisible((i) => !i);
-		e.stopPropagation();
+		event.stopPropagation();
 	};
 
 	return (
@@ -75,12 +78,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 							className={clsx('input', styles.password)}
 							value={password}
 							onChange={(event) => setPassword(event.target.value)}
-							type="password"
+							type={isPasswordVisible ? 'text' : 'password'}
 							placeholder="Введите пароль"
 						/>
-						<div
+						<span
 							onClick={(event) => handlePasswordVisibleClick(event)}
-							className={clsx('icon is-small is-right')}
+							className={clsx('icon is-right')}
 						>
 							{isPasswordVisible ? (
 								<i
@@ -96,7 +99,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 									)}
 								></i>
 							)}
-						</div>
+						</span>
 					</div>
 					<div className={styles.forgot_password}>
 						<NavLink className={styles.forgot_password} to={'/auth/reset/password'}>

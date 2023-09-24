@@ -50,6 +50,7 @@
 .control {
 	display: flex;
 	align-items: center;
+	pointer-events: initial;
 }
 
 // Username Input
@@ -58,9 +59,11 @@
 	font-weight: 500;
 }
 
+
 // Password Visible
 .password_visible {
 	cursor: pointer;
+	pointer-events: initial
 }
 
 // Forgot Password
@@ -110,4 +113,3 @@
 		border-radius: 0;
 	}
 }
-

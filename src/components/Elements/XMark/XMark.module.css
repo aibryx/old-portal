@@ -1,16 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap");
-.xmark {
-  padding: 12px;
-  border-radius: 100px;
-  font-size: 19px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @import '@/styles/index';
+ *   |         ^^^^^^^^^^^^^^^^
+ *   '
+ *   XMark.module.scss 1:9  root stylesheet */
 
-.xmark:hover {
-  background: #eeeeee;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import '@/styles/index';\d\a   \2502          ^^^^^^^^^^^^^^^^\a   \2575 \a   XMark.module.scss 1:9  root stylesheet";
 }
-
-/*# sourceMappingURL=XMark.module.css.map */

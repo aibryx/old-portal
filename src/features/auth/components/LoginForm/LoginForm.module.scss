@@ -1,4 +1,4 @@
-@import '../../../../styles/index';
+@import '@/styles/index';
 
 // Login Form Wrapper
 .form_wrapper {
@@ -37,22 +37,43 @@
 .form {
 	border-radius: $app-main-radius + 20px;
 	background: white;
-	width: 600px;
+	width: 550px;
 	height: auto;
 	padding: 50px;
 	position: relative;
+	label {
+		font-size: 18px;
+	}
+}
+
+// Control
+.control {
+	display: flex;
+	align-items: center;
 }
 
 // Username Input
-.username, .password {
-	font-weight: 600;
+.username,
+.password {
+	font-weight: 500;
+}
+
+// Password Visible
+.password_visible {
+	cursor: pointer;
+}
+
+// Forgot Password
+.forgot_password {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 3px;
 }
 
 // Label
 .label {
 	margin-top: 20px;
 }
-
 
 // Login Button
 .login_wrapper {
@@ -74,3 +95,19 @@
 		margin-right: 5px;
 	}
 }
+
+// Responsive
+
+// Mobile Begin
+@media (max-width: 515px) {
+	// Title
+	.title {
+		font-size: 30px;
+	}
+
+	.form {
+		height: 100vh;
+		border-radius: 0;
+	}
+}
+

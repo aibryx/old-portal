@@ -2,12 +2,12 @@ import styles from './XMark.module.scss';
 import React from "react";
 
 type XMarkProps = {
-	back: () => void;
+	close: () => void;
 };
 
-export const XMark = ({ back }: XMarkProps) => {
+export const XMark = ({ close }: XMarkProps) => {
 	const handleXMarkClick = (event: React.MouseEvent<HTMLDivElement>) => {
-		back();
+		close();
 		event.stopPropagation();
 	}
 	return (

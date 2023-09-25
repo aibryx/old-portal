@@ -2,26 +2,46 @@
 @import './index.scss';
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 // Global Options
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
+}
+
+// Scroll Bar
+
+::-webkit-scrollbar {
+	width: 7px;
+	background-color: #f9f9fd;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: $app-primary-color;
+	border: 10px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	//background-color: #f9f9fd;
+	border: 10px solid transparent;
 }
 
 $radius: $app-main-radius;
 
 // FlatIcons Global Options
 .fi {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 // Colors
@@ -45,15 +65,16 @@ $dropdown-item-hover-background-color: $app-hover-color;
 $dropdown-content-radius: $radius;
 $dropdown-menu-min-width: 200px;
 $dropdown-content-offset: 8px;
-$dropdown-content-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+$dropdown-content-shadow:
+	rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+	rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 
-
-@import "../../node_modules/bulma/sass/utilities/_all.sass";
-@import "../../node_modules/bulma/sass/base/_all.sass";
-@import "../../node_modules/bulma/sass/elements/button.sass";
-@import "../../node_modules/bulma/sass/form/_all.sass";
-@import "../../node_modules/bulma/sass/form/input-textarea";
-@import "../../node_modules/bulma/sass/components/navbar.sass";
-@import "../../node_modules/bulma/sass/components/dropdown";
-@import "../../node_modules/bulma/sass/layout/hero.sass";
-@import "../../node_modules/bulma/sass/layout/section.sass";
+@import '../../node_modules/bulma/sass/utilities/_all.sass';
+@import '../../node_modules/bulma/sass/base/_all.sass';
+@import '../../node_modules/bulma/sass/elements/button.sass';
+@import '../../node_modules/bulma/sass/form/_all.sass';
+@import '../../node_modules/bulma/sass/form/input-textarea';
+@import '../../node_modules/bulma/sass/components/navbar.sass';
+@import '../../node_modules/bulma/sass/components/dropdown';
+@import '../../node_modules/bulma/sass/layout/hero.sass';
+@import '../../node_modules/bulma/sass/layout/section.sass';

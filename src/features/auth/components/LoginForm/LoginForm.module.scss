@@ -66,6 +66,10 @@
 	pointer-events: initial
 }
 
+.password_visible:hover {
+	color: $app-primary-color;
+}
+
 // Forgot Password
 .forgot_password {
 	display: flex;

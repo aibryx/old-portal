@@ -19,6 +19,7 @@
 // Logo
 .logo {
 	width: 60px;
+	margin-right: 40px;
 	img {
 		border-radius: 50px;
 	}
@@ -27,7 +28,7 @@
 // Title
 .title {
 	margin-top: 10px;
-	margin-bottom: 20px;
+	margin-right: 40px;
 	font-weight: bold;
 	font-size: 45px;
 	color: black;
@@ -37,16 +38,20 @@
 .form {
 	border-radius: $app-main-radius + 20px;
 	background: white;
-	width: 550px;
-	height: auto;
-	padding: 50px;
+	width: 600px;
+	height: 95%;
+	padding: 40px 0 40px 40px;
 	position: relative;
-	//input {
-	//	height: 45px;
-	//}
 	label {
 		font-size: 18px;
 	}
+}
+
+// Inputs
+.inputs {
+	height: 70%;
+	overflow-y: auto;
+	padding-right: 33px;
 }
 
 // Username Input
@@ -70,6 +75,7 @@
 
 .register {
 	margin-top: 20px;
+	margin-right: 40px;
 	width: 100%;
 }
 
@@ -78,6 +84,7 @@
 	display: flex;
 	justify-content: center;
 	margin-top: 30px;
+	margin-right: 40px;
 	span {
 		margin-right: 5px;
 	}

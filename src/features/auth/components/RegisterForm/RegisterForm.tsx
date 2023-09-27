@@ -9,8 +9,6 @@ import { regex } from '@/lib/regex.ts';
 export const RegisterForm = () => {
 	const navigate = useNavigate();
 
-	const [firstName, setFirstName] = useState<string>('');
-	const [lastName, setLastName] = useState<string>('');
 	const [userName, setUserName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -38,13 +36,10 @@ export const RegisterForm = () => {
 
 	const isDisabledSignUpButton =
 		!Object.values(errorInputs).every((error) => !error) ||
-		!firstName ||
-		!lastName ||
 		!userName ||
 		!email ||
 		!password ||
-		password !== confirmPassword; // Добавлена проверка на равенство паролей
-
+		password !== confirmPassword;
 
 	const handleInputChange = (
 		value: string,
@@ -74,6 +69,7 @@ export const RegisterForm = () => {
 		<div className={styles.form_wrapper}>
 			<div className={styles.form}>
 				<BackMark back={() => navigate(-1)} />
+
 				<div className={styles.header}>
 					<div className={styles.logo}>
 						<img src="../../../../../public/logo.png" alt="logo" />
@@ -82,48 +78,6 @@ export const RegisterForm = () => {
 				</div>
 
 				<div className={styles.inputs}>
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>Имя</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' + `${errorInputs.firstName ? 'is-danger' : null}`,
-									styles.first_name
-								)}
-								value={firstName}
-								onChange={(event) =>
-									handleInputChange(event.target.value, 'firstName', setFirstName)
-								}
-								type="text"
-								placeholder="Введите имя"
-							/>
-							{errorInputs.firstName ? (
-								<p className="help is-danger">Некорректное имя</p>
-							) : null}
-						</div>
-					</div>
-
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>Фамилия</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' + `${errorInputs.lastName ? 'is-danger' : null}`,
-									styles.last_name
-								)}
-								value={lastName}
-								onChange={(event) =>
-									handleInputChange(event.target.value, 'lastName', setLastName)
-								}
-								type="text"
-								placeholder="Введите фамилию"
-							/>
-							{errorInputs.lastName ? (
-								<p className="help is-danger">Некорректная фамилия</p>
-							) : null}
-						</div>
-					</div>
-
 					<div className={clsx('field', styles.field)}>
 						<label className={clsx('label', styles.label)}>Имя пользователя</label>
 						<div className={clsx('control', styles.control)}>
@@ -222,6 +176,7 @@ export const RegisterForm = () => {
 						</div>
 					</div>
 				</div>
+
 				<div className={styles.register_wrapper}>
 					<button
 						onClick={trySignUp}

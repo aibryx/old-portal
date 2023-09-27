@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "bulma": "^0.9.4",
     "clsx": "^2.0.0",
+    "formik": "^2.4.5",
     "nanoid": "^5.0.1",
     "prettier": "^3.0.3",
     "react": "^18.2.0",

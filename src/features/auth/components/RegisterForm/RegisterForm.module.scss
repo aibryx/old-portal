@@ -39,7 +39,7 @@
 	border-radius: $app-main-radius + 20px;
 	background: white;
 	width: 600px;
-	height: 95%;
+	height: auto;
 	padding: 40px 0 40px 40px;
 	position: relative;
 	label {
@@ -49,7 +49,6 @@
 
 // Inputs
 .inputs {
-	height: 70%;
 	overflow-y: auto;
 	padding-right: 33px;
 }

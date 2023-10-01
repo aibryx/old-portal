@@ -2,16 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from './store/store.ts';
-import { Provider } from 'react-redux';
 import './styles/bulma.scss';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	<Provider store={store}>
-		<BrowserRouter>
-			<React.StrictMode>
-				<App />
-			</React.StrictMode>
-		</BrowserRouter>
-	</Provider>
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<React.StrictMode>
+					<App />
+				</React.StrictMode>
+			</BrowserRouter>
+		</QueryClientProvider>
 );

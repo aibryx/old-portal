@@ -4,12 +4,11 @@ import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
-import { useSignInMutation } from '../../api/auth.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
-import { useDispatch } from 'react-redux';
-import { addNotification } from '@/components/ Notifications/NotificationsSlice.ts';
 import { Notifications } from '@/components/ Notifications/Notifications.tsx';
-import { nanoid } from 'nanoid';
+import { useMutation } from '@/hooks/useMutation.ts';
+import { SignInQuery } from '@/features/auth/types/query.ts';
+import { signIn } from '@/features/auth/api/auth.ts';
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 
 type LoginFormProps = {
 	onSuccess: () => void;
@@ -17,28 +16,14 @@ type LoginFormProps = {
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>('aibryx');
 	const [password, setPassword] = useState<string>('qwerty123');
 
-	const [signIn, { isLoading }] = useSignInMutation();
+	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	const trySignIn = async () => {
-		const response = await signIn({
-			username,
-			password,
-		});
-
-		if (!response.error) {
-			onSuccess();
-			return;
-		}
-
-		dispatch(addNotification({ id: nanoid(), message: 'Неверный логин или пароль!' }));
-
-		console.log(response);
 	};
 
 	const handlePasswordVisibleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -113,7 +98,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 						onClick={() => trySignIn()}
 						className={clsx('button is-primary', styles.login)}
 					>
-						{isLoading ? <Spinner /> : 'Войти'}
+						{signInMutation.isLoading ? <Spinner /> : 'Войти'}
 					</button>
 				</div>
 

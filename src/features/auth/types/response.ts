@@ -15,6 +15,6 @@ export type UserResponse = {
     } | null;
     error: {
         type: 1 | 2;
-        content: any;
+        content: never;
     } | null;
 };

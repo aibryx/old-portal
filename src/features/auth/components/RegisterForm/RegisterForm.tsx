@@ -3,67 +3,53 @@ import { clsx } from 'clsx';
 import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import React, { SetStateAction, useState } from 'react';
 import { regex } from '@/lib/regex.ts';
+import { Form, Formik, FormikErrors } from 'formik';
+import { signUp } from '@/features/auth/api/auth.ts';
 
-export const RegisterForm = () => {
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { displayRegisterFormErrors } from '@/features/auth/utils/displayRegisterFormErrors.ts';
+import React, { SetStateAction } from 'react';
+import { useMutation } from '@/hooks/useMutation.ts';
+import { SignUpQuery } from '@/features/auth/types/query.ts';
+
+type RegisterForm = {
+	username: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+};
+
+export type RegisterErrors = Partial<Record<keyof RegisterForm, string>>;
+
+type RegisterFormProps = {
+	setEmail: React.Dispatch<SetStateAction<string>>;
+};
+
+export const RegisterForm = ({ setEmail }: RegisterFormProps) => {
 	const navigate = useNavigate();
 
-	const [userName, setUserName] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	const [confirmPassword, setConfirmPassword] = useState<string>('');
+	const signUpMutation = useMutation<SignUpQuery>(signUp);
 
-	type ErrorInputsType = {
-		firstName: boolean;
-		lastName: boolean;
-		userName: boolean;
-		email: boolean;
-		password: boolean;
-		confirmPassword: boolean;
+	const initialValues: RegisterForm = {
+		username: 'aibryx',
+		email: 'alimdzhanibekov1@gmail.com',
+		password: 'Qwerty123',
+		confirmPassword: 'Qwerty123',
 	};
 
-	const [errorInputs, setErrorInputs] = useState<ErrorInputsType>({
-		firstName: false,
-		lastName: false,
-		userName: false,
-		email: false,
-		password: false,
-		confirmPassword: false,
-	});
-
-	console.log(errorInputs);
-
-	const isDisabledSignUpButton =
-		!Object.values(errorInputs).every((error) => !error) ||
-		!userName ||
-		!email ||
-		!password ||
-		password !== confirmPassword;
-
-	const handleInputChange = (
-		value: string,
-		inputName: string,
-		setInput: React.Dispatch<SetStateAction<string>>
+	const trySignUp = async (
+		values: RegisterForm,
+		setErrors: (errors: FormikErrors<RegisterErrors>) => void
 	) => {
-		setInput(value);
-		if (inputName === 'confirmPassword') {
-			handleConfirmPasswordChange(value);
+		const { error } = await signUpMutation.mutation(values);
+
+		if (error) {
+			displayRegisterFormErrors(error.error, setErrors);
 			return;
 		}
-		if (!regex[inputName].test(value) && value !== '') {
-			setErrorInputs({ ...errorInputs, [inputName]: true });
-		} else {
-			setErrorInputs({ ...errorInputs, [inputName]: false });
-		}
+		setEmail(values.email);
 	};
-
-	const handleConfirmPasswordChange = (value: string) => {
-		if (value !== password) setErrorInputs({ ...errorInputs, confirmPassword: true });
-		else setErrorInputs({ ...errorInputs, confirmPassword: false });
-	};
-
-	const trySignUp = () => {};
 
 	return (
 		<div className={styles.form_wrapper}>
@@ -77,115 +63,142 @@ export const RegisterForm = () => {
 					<div className={styles.title}>MilkHunters ID</div>
 				</div>
 
-				<div className={styles.inputs}>
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>Имя пользователя</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' + `${errorInputs.userName ? 'is-danger' : null}`,
-									styles.username
-								)}
-								value={userName}
-								onChange={(event) =>
-									handleInputChange(event.target.value, 'userName', setUserName)
-								}
-								type="text"
-								placeholder="Введите имя пользователя"
-							/>
-							{errorInputs.userName ? (
-								<p className="help is-danger">Некорректное имя пользователя</p>
-							) : null}
-						</div>
-					</div>
+				<Formik<RegisterForm>
+					initialValues={initialValues}
+					validate={(values) => {
+						const errors: RegisterErrors = {};
+						if (!regex.username.test(values.username) && values.username !== '') {
+							errors.username = 'Невалидное имя пользователя';
+						}
+						if (!regex.email.test(values.email) && values.email !== '') {
+							errors.email = 'Невалидный адрес электронной почты';
+						}
+						if (!regex.password.test(values.password) && values.password !== '') {
+							errors.password = 'Невалидный пароль';
+						}
+						if (
+							values.confirmPassword !== values.password &&
+							values.confirmPassword !== ''
+						) {
+							errors.confirmPassword = 'Пароли не совпадают';
+						}
+						return errors;
+					}}
+					onSubmit={async (values, { setErrors }) => {
+						await trySignUp(values, setErrors);
+					}}
+				>
+					{({ values, errors, handleChange, isValid }) => (
+						<Form>
+							<div className={styles.inputs}>
+								<div className={clsx('field', styles.field)}>
+									<label className={clsx('label', styles.label)}>
+										Имя пользователя
+									</label>
+									<div className={clsx('control', styles.control)}>
+										<input
+											className={clsx(
+												'input ' +
+													`${errors.username ? 'is-danger' : null}`,
+												styles.username
+											)}
+											name="username"
+											value={values.username}
+											onChange={handleChange}
+											type="text"
+											placeholder="Введите имя пользователя"
+										/>
+										{errors.username ? (
+											<p className="help is-danger">{errors.username}</p>
+										) : null}
+									</div>
+								</div>
 
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>
-							Адрес электронной почты
-						</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' + `${errorInputs.email ? 'is-danger' : null}`,
-									styles.email
-								)}
-								value={email}
-								onChange={(event) =>
-									handleInputChange(event.target.value, 'email', setEmail)
-								}
-								type="email"
-								placeholder="Введите имя пользователя"
-							/>
-							{errorInputs.email ? (
-								<p className="help is-danger">
-									Некорректный адрес электронной почты
-								</p>
-							) : null}
-						</div>
-					</div>
+								<div className={clsx('field', styles.field)}>
+									<label className={clsx('label', styles.label)}>
+										Адрес электронной почты
+									</label>
+									<div className={clsx('control', styles.control)}>
+										<input
+											className={clsx(
+												'input ' + `${errors.email ? 'is-danger' : null}`,
+												styles.email
+											)}
+											name="email"
+											value={values.email}
+											onChange={handleChange}
+											type="text"
+											placeholder="Введите aдрес электронной почты"
+										/>
+										{errors.email ? (
+											<p className="help is-danger">{errors.email}</p>
+										) : null}
+									</div>
+								</div>
 
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>Пароль</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' + `${errorInputs.password ? 'is-danger' : null}`,
-									styles.password
-								)}
-								value={password}
-								onChange={(event) =>
-									handleInputChange(event.target.value, 'password', setPassword)
-								}
-								type="text"
-								placeholder="Введите пароль"
-							/>
-							{errorInputs.password ? (
-								<p className="help is-danger">Слишком легкий пароль</p>
-							) : null}
-						</div>
-					</div>
+								<div className={clsx('field', styles.field)}>
+									<label className={clsx('label', styles.label)}>Пароль</label>
+									<div className={clsx('control', styles.control)}>
+										<input
+											className={clsx(
+												'input ' +
+													`${errors.password ? 'is-danger' : null}`,
+												styles.password
+											)}
+											name="password"
+											value={values.password}
+											onChange={handleChange}
+											type="text"
+											placeholder="Введите пароль"
+										/>
+										{errors.password ? (
+											<p className="help is-danger">{errors.password}</p>
+										) : null}
+									</div>
+								</div>
 
-					<div className={clsx('field', styles.field)}>
-						<label className={clsx('label', styles.label)}>Повторите пароль</label>
-						<div className={clsx('control', styles.control)}>
-							<input
-								className={clsx(
-									'input ' +
-										`${
-											confirmPassword !== password &&
-											confirmPassword.length !== 0
-												? 'is-danger'
-												: null
-										}`,
-									styles.confirm_password
-								)}
-								value={confirmPassword}
-								onChange={(event) =>
-									handleInputChange(
-										event.target.value,
-										'confirmPassword',
-										setConfirmPassword
-									)
-								}
-								type="text"
-								placeholder="Повторите пароль"
-							/>
-							{confirmPassword !== password && confirmPassword.length !== 0 ? (
-								<p className="help is-danger">Пароли не совпадают</p>
-							) : null}
-						</div>
-					</div>
-				</div>
+								<div className={clsx('field', styles.field)}>
+									<label className={clsx('label', styles.label)}>
+										Повторите пароль
+									</label>
+									<div className={clsx('control', styles.control)}>
+										<input
+											className={clsx(
+												'input ' +
+													`${
+														errors.confirmPassword ? 'is-danger' : null
+													}`,
+												styles.confirm_password
+											)}
+											name="confirmPassword"
+											value={values.confirmPassword}
+											onChange={handleChange}
+											type="text"
+											placeholder="Повторите пароль"
+										/>
+										{errors.confirmPassword ? (
+											<p className="help is-danger">
+												{errors.confirmPassword}
+											</p>
+										) : null}
+									</div>
+								</div>
+							</div>
 
-				<div className={styles.register_wrapper}>
-					<button
-						onClick={trySignUp}
-						disabled={isDisabledSignUpButton}
-						className={clsx('button is-primary is-disabled', styles.register)}
-					>
-						Зарегистрироваться
-					</button>
-				</div>
+							<div className={styles.register_wrapper}>
+								<button
+									type="submit"
+									className={clsx('button is-primary', styles.register)}
+									disabled={
+										!isValid || Object.values(values).some((v) => v === '')
+									}
+								>
+									{signUpMutation.isLoading ? <Spinner /> : 'Зарегистрироваться'}
+								</button>
+							</div>
+						</Form>
+					)}
+				</Formik>
 
 				<div className={styles.to_login}>
 					<span>Есть аккаунт?</span>

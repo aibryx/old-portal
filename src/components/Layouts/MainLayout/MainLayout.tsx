@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
-import { useUser } from '@/hooks/useUser.ts';
 import { UserResponse } from '@/features/auth/types/response.ts';
-import { useLogoutMutation, useRefreshMutation } from '@/features/auth/api/auth.ts';
-import { Spinner } from '../../Elements/Spinner/Spinner.tsx';
 import styles from './MainLayout.module.scss';
 import 'bulma/css/bulma.min.css';
 import { Notifications } from '@/components/ Notifications/Notifications.tsx';
@@ -15,23 +12,17 @@ type HeaderProps = {
 	user: UserResponse | null;
 };
 
-const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderProps) => {
+const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) => {
+	const user = false;
 	let userDropdownClass = '';
 	if (isUserDropdownActive) userDropdownClass += 'is-active';
 
-	const [logout] = useLogoutMutation();
-	const [refresh] = useRefreshMutation();
 	const changeUserDropdownState = (e: React.MouseEvent<HTMLImageElement>) => {
 		setIsUserDropdownActive((i) => !i);
 		e.stopPropagation();
 	};
 
-	const tryLogout = async () => {
-		const response = await logout(null);
-		await refresh(null);
-		location.reload();
-		console.log(response);
-	};
+	const tryLogout = async () => {};
 
 	return (
 		<div className={styles.header}>
@@ -297,20 +288,18 @@ type MainLayoutProps = {
 };
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
-	const { user, isLoading } = useUser();
 	const [isUserDropdownActive, setIsUserDropdownActive] = useState<boolean>(false);
 	return (
 		<div onClick={() => setIsUserDropdownActive(false)} className={styles.layout_wrapper}>
-			{isLoading && <Spinner />}
 			<Header
 				isUserDropdownActive={isUserDropdownActive}
 				setIsUserDropdownActive={setIsUserDropdownActive}
-				user={user}
+				user={null}
 			/>
 			<Notifications />
 			<div className={styles.container}>
 				<div className={styles.layout}>
-					<Sidebar user={user} />
+					<Sidebar user={null} />
 					<View>{children}</View>
 					<Live />
 					<Footer />

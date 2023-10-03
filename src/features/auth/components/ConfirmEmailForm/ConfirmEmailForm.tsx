@@ -35,7 +35,7 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 			await sendEmailMutation.mutation(email);
 		};
 		trySendEmail(email);
-	}, [email]);
+	}, [email, sendEmailMutation]);
 
 	const tryConfirmEmail = async (
 		code: string,

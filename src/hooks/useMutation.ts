@@ -1,28 +1,30 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BaseResponse } from '@/types';
 
 export const useMutation = <T>(mutationFn: (body: T) => Promise<Response>) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const mutation = async (body: T) => {
-    setIsLoading(true);
+	const mutation = useCallback(
+		async (body: T) => {
+			setIsLoading(true);
 
-    try {
-      const response: Response = await mutationFn(body);
-      if (!response.ok) {
-        const errorData: BaseResponse = await response.json();
-        setIsLoading(false);
-        return { data: null, error: errorData };
-      } else {
-        const responseData: BaseResponse = await response.json();
-        setIsLoading(false);
-        return { data: responseData, error: null };
-      }
-    } catch (error) {
-      setIsLoading(false);
-      return { data: null, error: error as BaseResponse };
-    }
-  };
+			try {
+				const response: Response = await mutationFn(body);
+				if (!response.ok) {
+					const errorData: BaseResponse = await response.json();
+					return { data: null, error: errorData };
+				} else {
+					const responseData: BaseResponse = await response.json();
+					return { data: responseData, error: null };
+				}
+			} catch (error) {
+				return { data: null, error: error as BaseResponse };
+			} finally {
+				setIsLoading(false);
+			}
+		},
+		[mutationFn]
+	);
 
-  return { isLoading, mutation };
+	return { isLoading, mutation };
 };

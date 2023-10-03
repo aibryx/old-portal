@@ -38,7 +38,7 @@ export const buildUrl = (apiUrl: string, record: object) => {
 	return url;
 };
 
-const makeReadRequest = async (apiUrl: string, record: object) => {
+export const makeReadRequest = async (apiUrl: string, record: object) => {
 	const url = buildUrl(apiUrl, record);
 	return await makeRequest(url, 'GET');
 };

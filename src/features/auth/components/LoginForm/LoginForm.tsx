@@ -9,6 +9,8 @@ import { useMutation } from '@/hooks/useMutation.ts';
 import { SignInQuery } from '@/features/auth/types/query.ts';
 import { signIn } from '@/features/auth/api/auth.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { nanoid } from "nanoid";
+import { useNotificationStore } from "@/store/store.ts";
 
 type LoginFormProps = {
 	onSuccess: () => void;
@@ -21,9 +23,22 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const [username, setUsername] = useState<string>('aibryx');
 	const [password, setPassword] = useState<string>('qwerty123');
 
+	const addNotification = useNotificationStore((state) => state.addNotification);
+
+
 	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	const trySignIn = async () => {
+		const { error} = await signInMutation.mutation({username, password});
+		if (error) {
+			const id = nanoid(); // Создаем уникальный id с помощью nanoid
+			const notification = { message: JSON.stringify(error.error.content), id };
+
+			addNotification(notification);
+
+			return;
+		}
+		onSuccess();
 	};
 
 	const handlePasswordVisibleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -86,11 +101,9 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 							)}
 						</span>
 					</div>
-					<div className={styles.forgot_password}>
 						<NavLink className={styles.forgot_password} to={'/auth/reset/password'}>
 							Забыли пароль?
 						</NavLink>
-					</div>
 				</div>
 
 				<div className={styles.login_wrapper}>

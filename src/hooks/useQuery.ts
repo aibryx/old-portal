@@ -1,22 +1,36 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BaseResponse } from '@/types';
 
-export const useQuery = async (query: () => Promise<Response>) => {
-	const [data, setData] = useState<Array<BaseResponse | Response | null>>([null, null]);
+export const useQuery = (queryFn: () => Promise<Response>) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	try {
+	const [data, setData] = useState<BaseResponse>(null);
+	const [error, setError] = useState<BaseResponse>(null);
+
+	const fetchData = useCallback(async () => {
 		setIsLoading(true);
-		const response: Response = await query();
-		if (!response.ok) {
-			setData([await response.json(), null]);
+
+		try {
+			const response: Response = await queryFn();
+			if (!response.ok) {
+				const errorData: BaseResponse = await response.json();
+				setError(errorData);
+				setData(null);
+			} else {
+				const responseData: BaseResponse = await response.json();
+				setData(responseData);
+				setError(null);
+			}
+		} catch (error) {
+			setError(error as BaseResponse);
+			setData(null);
+		} finally {
 			setIsLoading(false);
 		}
-		setData([null, response]);
-		setIsLoading(false);
-	} catch (error) {
-		setData([error as BaseResponse, null]);
-		setIsLoading(false);
-	}
+	}, [queryFn]);
 
-	return { data, isLoading };
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	return { data, isLoading, error };
 };

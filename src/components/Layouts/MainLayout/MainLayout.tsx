@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
-import { UserResponse } from '@/features/auth/types/response.ts';
 import styles from './MainLayout.module.scss';
 import 'bulma/css/bulma.min.css';
 import { Notifications } from '@/components/ Notifications/Notifications.tsx';
+import { useQuery } from '@/hooks/useQuery.ts';
+import { getCurrentUser } from '@/features/users/api/users.ts';
+import { BaseResponse } from '@/types';
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { useMutation } from '@/hooks/useMutation.ts';
+import { logout } from '@/features/auth/api/auth.ts';
 
 type HeaderProps = {
 	isUserDropdownActive: boolean;
 	setIsUserDropdownActive: React.Dispatch<React.SetStateAction<boolean>>;
-	user: UserResponse | null;
+	user: BaseResponse;
 };
 
-const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) => {
-	const user = false;
+const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderProps) => {
 	let userDropdownClass = '';
 	if (isUserDropdownActive) userDropdownClass += 'is-active';
 
@@ -22,7 +26,13 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) 
 		e.stopPropagation();
 	};
 
-	const tryLogout = async () => {};
+	const logoutMutation = useMutation(logout);
+	const tryLogout = async () => {
+		const { error,data } = await logoutMutation.mutation(null);
+		console.log(error, data);
+
+		window.location.reload();
+	};
 
 	return (
 		<div className={styles.header}>
@@ -87,7 +97,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive }: HeaderProps) 
 };
 
 type SidebarProps = {
-	user: UserResponse | null;
+	user: BaseResponse;
 };
 
 const Sidebar = ({ user }: SidebarProps) => {
@@ -288,18 +298,21 @@ type MainLayoutProps = {
 };
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
+	const { data: user, isLoading } = useQuery(getCurrentUser);
 	const [isUserDropdownActive, setIsUserDropdownActive] = useState<boolean>(false);
 	return (
 		<div onClick={() => setIsUserDropdownActive(false)} className={styles.layout_wrapper}>
+			{isLoading && <Spinner />}
+
 			<Header
 				isUserDropdownActive={isUserDropdownActive}
 				setIsUserDropdownActive={setIsUserDropdownActive}
-				user={null}
+				user={user}
 			/>
 			<Notifications />
 			<div className={styles.container}>
 				<div className={styles.layout}>
-					<Sidebar user={null} />
+					<Sidebar user={user} />
 					<View>{children}</View>
 					<Live />
 					<Footer />

@@ -32,10 +32,10 @@ export const RegisterForm = ({ setEmail }: RegisterFormProps) => {
 	const signUpMutation = useMutation<SignUpQuery>(signUp);
 
 	const initialValues: RegisterForm = {
-		username: 'aibryx',
-		email: 'alimdzhanibekov1@gmail.com',
-		password: 'Qwerty123',
-		confirmPassword: 'Qwerty123',
+		username: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
 	};
 
 	const trySignUp = async (
@@ -43,7 +43,6 @@ export const RegisterForm = ({ setEmail }: RegisterFormProps) => {
 		setErrors: (errors: FormikErrors<RegisterErrors>) => void
 	) => {
 		const { error } = await signUpMutation.mutation(values);
-
 		if (error) {
 			displayRegisterFormErrors(error.error, setErrors);
 			return;

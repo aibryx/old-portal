@@ -9,8 +9,8 @@ import { useMutation } from '@/hooks/useMutation.ts';
 import { SignInQuery } from '@/features/auth/types/query.ts';
 import { signIn } from '@/features/auth/api/auth.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
-import { nanoid } from "nanoid";
-import { useNotificationStore } from "@/store/store.ts";
+import { nanoid } from 'nanoid';
+import { useNotificationStore } from '@/store/store.ts';
 
 type LoginFormProps = {
 	onSuccess: () => void;
@@ -20,19 +20,18 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const navigate = useNavigate();
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-	const [username, setUsername] = useState<string>('aibryx');
-	const [password, setPassword] = useState<string>('qwerty123');
+	const [username, setUsername] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 
 	const addNotification = useNotificationStore((state) => state.addNotification);
-
 
 	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	const trySignIn = async () => {
-		const { error} = await signInMutation.mutation({username, password});
+		const { error } = await signInMutation.mutation({ username, password });
 		if (error) {
-			const id = nanoid(); // Создаем уникальный id с помощью nanoid
-			const notification = { message: JSON.stringify(error.error.content), id };
+			const id = nanoid();
+			const notification = { message: 'Неправильный логин или пароль', id };
 
 			addNotification(notification);
 
@@ -101,9 +100,9 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 							)}
 						</span>
 					</div>
-						<NavLink className={styles.forgot_password} to={'/auth/reset/password'}>
-							Забыли пароль?
-						</NavLink>
+					<NavLink className={styles.forgot_password} to={'/auth/reset/password'}>
+						Забыли пароль?
+					</NavLink>
 				</div>
 
 				<div className={styles.login_wrapper}>

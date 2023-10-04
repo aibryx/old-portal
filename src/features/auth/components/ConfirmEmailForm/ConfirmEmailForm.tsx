@@ -35,7 +35,7 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 			await sendEmailMutation.mutation(email);
 		};
 		trySendEmail(email);
-	}, [email, sendEmailMutation]);
+	}, [email]);
 
 	const tryConfirmEmail = async (
 		code: string,
@@ -45,11 +45,11 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 			email,
 			code,
 		});
-		if (error) {
+		if (error?.error) {
 			displayConfirmEmailFormErrors(error.error, setErrors);
 			return;
 		}
-		navigate('/articles');
+		navigate('/auth/login');
 	};
 
 	return (

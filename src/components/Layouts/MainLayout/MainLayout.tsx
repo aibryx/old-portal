@@ -7,9 +7,9 @@ import { Notifications } from '@/components/ Notifications/Notifications.tsx';
 import { useQuery } from '@/hooks/useQuery.ts';
 import { getCurrentUser } from '@/features/users/api/users.ts';
 import { BaseResponse } from '@/types';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { useMutation } from '@/hooks/useMutation.ts';
 import { logout } from '@/features/auth/api/auth.ts';
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 
 type HeaderProps = {
 	isUserDropdownActive: boolean;
@@ -28,7 +28,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderP
 
 	const logoutMutation = useMutation(logout);
 	const tryLogout = async () => {
-		const { error,data } = await logoutMutation.mutation(null);
+		const { error, data } = await logoutMutation.mutation(null);
 		console.log(error, data);
 
 		window.location.reload();
@@ -300,9 +300,12 @@ type MainLayoutProps = {
 export const MainLayout = ({ children }: MainLayoutProps) => {
 	const { data: user, isLoading } = useQuery(getCurrentUser);
 	const [isUserDropdownActive, setIsUserDropdownActive] = useState<boolean>(false);
+
+	if (isLoading) return <Spinner />;
+
 	return (
 		<div onClick={() => setIsUserDropdownActive(false)} className={styles.layout_wrapper}>
-			{isLoading && <Spinner />}
+			{/*{isLoading && <Spinner />}*/}
 
 			<Header
 				isUserDropdownActive={isUserDropdownActive}

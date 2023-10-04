@@ -12,10 +12,10 @@ export const useMutation = <T>(mutationFn: (body: T) => Promise<Response>) => {
 				const response: Response = await mutationFn(body);
 				if (!response.ok) {
 					const errorData: BaseResponse = await response.json();
-					return { data: null, error: errorData };
+					return { data: null, status: response.status, error: errorData };
 				} else {
 					const responseData: BaseResponse = await response.json();
-					return { data: responseData, error: null };
+					return { data: responseData, status: response.status, error: null };
 				}
 			} catch (error) {
 				return { data: null, error: error as BaseResponse };

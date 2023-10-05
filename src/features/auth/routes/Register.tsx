@@ -1,9 +1,9 @@
 import { RegisterForm } from '../components/RegisterForm/RegisterForm.jsx';
-import { useState } from 'react';
 import { ConfirmEmailForm } from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.tsx';
+import { useRegisterStore } from "@/store/store.ts";
 
 export const Register = () => {
-	const [emailForConfirm, setEmailForConfirm] = useState<string>('');
+	const email = useRegisterStore(state => state.registerInfo.email);
 
-	return emailForConfirm ? <ConfirmEmailForm email={emailForConfirm}/> : <RegisterForm setEmail={setEmailForConfirm}/>;
+	return email ? <ConfirmEmailForm email={email}/> : <RegisterForm/>;
 };

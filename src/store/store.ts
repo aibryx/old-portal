@@ -5,22 +5,43 @@ export type NotificationItem = {
 	id: string;
 };
 
+export type RegisterInfo = {
+	username: string;
+	email: string;
+	password: string;
+};
+
 type NotificationState = {
-	notifications: Array<NotificationItem>,
-  addNotification: (notification: NotificationItem) => void;
-  deleteNotification: (id: string) => void;
+	notifications: Array<NotificationItem>;
+	addNotification: (notification: NotificationItem) => void;
+	deleteNotification: (id: string) => void;
+};
+
+type RegisterState = {
+	registerInfo: RegisterInfo;
+	changeRegisterInfo: (nextInfo: RegisterInfo) => void;
 };
 
 export const useNotificationStore = create<NotificationState>((set) => ({
-	notifications:[],
+	notifications: [],
 
 	addNotification: (notification) =>
-		set((state ) => ({
-			notifications: [...state.notifications, notification]
+		set((state) => ({
+			notifications: [...state.notifications, notification],
 		})),
 
 	deleteNotification: (id: string) =>
 		set((state: { notifications: Array<NotificationItem> }) => ({
 			notifications: state.notifications.filter((n) => n.id !== id),
 		})),
+}));
+
+export const useRegisterStore = create<RegisterState>((set) => ({
+	registerInfo: { username: '', email: '', password: '' },
+
+	changeRegisterInfo: (nextInfo) =>
+		set(() => ({
+			registerInfo: nextInfo,
+		}))
+
 }));

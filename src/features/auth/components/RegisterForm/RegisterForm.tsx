@@ -9,9 +9,9 @@ import { signUp } from '@/features/auth/api/auth.ts';
 
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { displayRegisterFormErrors } from '@/features/auth/utils/displayRegisterFormErrors.ts';
-import React, { SetStateAction } from 'react';
 import { useMutation } from '@/hooks/useMutation.ts';
 import { SignUpQuery } from '@/features/auth/types/query.ts';
+import { useRegisterStore } from '@/store/store.ts';
 
 type RegisterForm = {
 	username: string;
@@ -22,21 +22,21 @@ type RegisterForm = {
 
 export type RegisterErrors = Partial<Record<keyof RegisterForm, string>>;
 
-type RegisterFormProps = {
-	setEmail: React.Dispatch<SetStateAction<string>>;
-};
-
-export const RegisterForm = ({ setEmail }: RegisterFormProps) => {
+export const RegisterForm = () => {
 	const navigate = useNavigate();
 
 	const signUpMutation = useMutation<SignUpQuery>(signUp);
+	const changeRegisterInfo = useRegisterStore((state) => state.changeRegisterInfo);
+	const registerInfo = useRegisterStore(state => state.registerInfo);
 
 	const initialValues: RegisterForm = {
-		username: '',
-		email: '',
-		password: '',
-		confirmPassword: '',
+		username: 'dwqwq',
+		email: 'qwdq@milkhunters.ru',
+		password: 'Qwerty123',
+		confirmPassword: 'Qwerty123',
 	};
+
+	console.log(registerInfo);
 
 	const trySignUp = async (
 		values: RegisterForm,
@@ -47,7 +47,8 @@ export const RegisterForm = ({ setEmail }: RegisterFormProps) => {
 			displayRegisterFormErrors(error.error, setErrors);
 			return;
 		}
-		setEmail(values.email);
+		// changeRegisterInfo({username: '', email: 'asd@milkhunters.ru', password: ''})
+		changeRegisterInfo(values);
 	};
 
 	return (

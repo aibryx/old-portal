@@ -10,7 +10,7 @@ import { SignInQuery } from '@/features/auth/types/query.ts';
 import { signIn } from '@/features/auth/api/auth.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { nanoid } from 'nanoid';
-import { useNotificationStore } from '@/store/store.ts';
+import { useNotificationStore, useRegisterStore } from '@/store/store.ts';
 
 type LoginFormProps = {
 	onSuccess: () => void;
@@ -24,12 +24,19 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const [password, setPassword] = useState<string>('');
 
 	const addNotification = useNotificationStore((state) => state.addNotification);
+	const registerInfo = useRegisterStore((state) => state.registerInfo);
+	// const changeRegisterInfo = useRegisterStore((state) => state.changeRegisterInfo);
+
+	console.log(registerInfo);
 
 	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	const trySignIn = async () => {
 		const { error } = await signInMutation.mutation({ username, password });
 		if (error) {
+			// if (error.error.content === 'Пользователь не подтвержден') {
+			// 	changeRegisterInfo({username, password})
+			// }
 			const id = nanoid();
 			const notification = { message: 'Неправильный логин или пароль', id };
 

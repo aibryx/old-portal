@@ -1,15 +1,16 @@
 import styles from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.module.scss';
-import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
 import { Form, Formik, FormikErrors } from 'formik';
 import { regex } from '@/lib/regex.ts';
 import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { confirmEmail, sendEmail } from '@/features/auth/api/auth.ts';
+import { confirmEmail, sendEmail, signIn } from '@/features/auth/api/auth.ts';
 import { useMutation } from '@/hooks/useMutation.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { displayConfirmEmailFormErrors } from '@/features/auth/utils/displayConfirmEmailFormErrors.ts';
+import { SignInQuery } from '@/features/auth/types/query.ts';
+import { useRegisterStore } from '@/store/store.ts';
 
 type ConfirmEmailProps = {
 	email: string;
@@ -19,16 +20,31 @@ type CodeForConfirmEmail = {
 	code: string;
 };
 
+type Taimer = {
+	time: number;
+	minuts: number;
+	seconds: number;
+};
+
 type CodeForConfirmEmailError = Partial<Record<keyof CodeForConfirmEmail, string>>;
 
 export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
+	const [timer, setTimer] = useState<Taimer>({
+		time: 120,
+		minuts: 2,
+		seconds: 0,
+	});
+
 	const navigate = useNavigate();
 
-	const sendEmailMutation = useMutation<string>(sendEmail);
+	const registerInfo = useRegisterStore((state) => state.registerInfo);
+	const changeRegisterInfo = useRegisterStore((state) => state.changeRegisterInfo);
 
+	const sendEmailMutation = useMutation<string>(sendEmail);
 	const confirmEmailMutation = useMutation((args: { email: string; code: string }) =>
 		confirmEmail(args)
 	);
+	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	useEffect(() => {
 		const trySendEmail = async (email: string) => {
@@ -36,6 +52,28 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 		};
 		trySendEmail(email);
 	}, [email]);
+
+	useEffect(() => {
+		const trySendEmail = async (email: string) => {
+			await sendEmailMutation.mutation(email);
+		};
+		setTimeout(() => {
+			if (timer.time === 0) {
+				trySendEmail(email);
+				setTimer({
+					time: 120,
+					minuts: 2,
+					seconds: 0,
+				});
+				return;
+			}
+			setTimer({
+				time: timer.time - 1,
+				minuts: Math.floor((timer.time - 1) / 60),
+				seconds: timer.time - Math.floor((timer.time - 1) / 60) * 60 - 1,
+			});
+		}, 1000);
+	}, [timer.time]);
 
 	const tryConfirmEmail = async (
 		code: string,
@@ -49,20 +87,27 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 			displayConfirmEmailFormErrors(error.error, setErrors);
 			return;
 		}
-		navigate('/auth/login');
+		await signInMutation.mutation({
+			username: registerInfo.username,
+			password: registerInfo.password,
+		});
+		changeRegisterInfo({ username: '', email: '', password: '' });
+		navigate('/articles');
 	};
 
 	return (
 		<div className={styles.form_wrapper}>
 			<div className={styles.form}>
-				<BackMark back={() => navigate('/auth/register')} />
-
 				<div className={styles.header}>
 					<div className={styles.logo}>
 						<img src="../../../../../public/logo.png" alt="logo" />
 					</div>
 					<div className={styles.title}>MilkHunters ID</div>
 					<div className={styles.suptitle}>Подтвердите адрес {email}</div>
+					<div className={styles.timer}>
+						Мы отправим новый код через: {timer.minuts}:
+						{timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
+					</div>
 				</div>
 
 				<Formik<CodeForConfirmEmail>
@@ -124,7 +169,14 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 
 				<div className={styles.to_login}>
 					<span>Есть аккаунт?</span>
-					<NavLink to={'/auth/login'}>Войти</NavLink>
+					<NavLink
+						to={'/auth/login'}
+						onClick={() =>
+							changeRegisterInfo({ username: '', email: '', password: '' })
+						}
+					>
+						Войти
+					</NavLink>
 				</div>
 			</div>
 		</div>

@@ -1,27 +1,49 @@
-# React + TypeScript + Vite
+<h1 align="center">MilkHunters Portal</h1><br>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <a href="https://nodejs.org/">
+    <img src='https://psv4.userapi.com/c909418/u559075641/docs/d42/6f34a602097c/circle.png?extra=srEePUPRbEQlWwDUWN5_EB50MGxYRWy0NnEr3H7MNUYt8kMHRFmCleDBOT_CbjMXKkitkOelmfYzmBSDljmhRKvC962QWFb0e5lLKNvJPnIxvzwFtzBGuR43ZSbJQ8AZkS_h4avcOELW6mXCr36F9QqJ' height='140px' alt='MilkHunters Logo' />
+  </a>
+</p>
 
-Currently, two official plugins are available:
+<h3>
+<p align="center">
+  Добро пожаловать в MilkHunters Portal - вашу платформу для блога и обмена идеями. <br> Это место, где вы можете создавать, редактировать и публиковать свои статьи, общаться с другими авторами и наслаждаться чтением качественного контента.
+</p>
+</h3>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📜 О проекте
 
-## Expanding the ESLint configuration
+MilkHunters Portal - это удобная и мощная платформа для создания и публикации ваших блогов и статей. Вот некоторые из наших основных возможностей:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-   **Создание и редактирование статей**: Легко создавайте новые статьи и редактируйте их с помощью нашего удобного редактора.
 
-- Configure the top-level `parserOptions` property like this:
+-   **Комментарии и обсуждения**: Общайтесь с другими авторами и читателями, оставляйте комментарии и участвуйте в обсуждениях под статьями.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+-   **Личные профили**: Создайте свой профиль, загрузите аватар и расскажите о себе.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+-   **Поиск и фильтрация**: Легко находите интересующие вас статьи и авторов с помощью удобной системы поиска и фильтрации.
+
+-   **Закладки**: Добавляйте статьи в закладки, чтобы вернуться к ним позже.
+
+## ⚙️ Установка
+
+Чтобы начать использовать MilkHunters Portal, выполните следующие шаги:
+
+1. **Клонирование репозитория**: Выполните `git clone https://github.com/milkhunters/milky-frontend.git`, чтобы склонировать репозиторий на свой локальный компьютер.
+
+2. **Установка зависимостей**: Перейдите в каталог проекта и выполните `npm install`, чтобы установить все необходимые зависимости.
+
+3. **Запуск локального сервера**: Запустите локальный сервер с помощью `npm start dev`.
+
+## 👋 Внесение вклада
+
+Мы приветствуем ваши вклады и предложения по улучшению MilkHunters Portal. Если у вас есть идеи или хотите внести свой вклад, пожалуйста, создайте запрос на изменение (Pull Request) или сообщите об ошибке (Issue).
+
+## 📄 Лицензия
+
+MilkHunters Portal распространяется под лицензией MIT. Подробности смотрите в файле [LICENSE](LICENSE).
+
+---
+
+Спасибо, что выбрали MilkHunters Portal ! 🥛🕵️‍♂️

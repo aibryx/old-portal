@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import styles from './LoginForm.module.scss';
-import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import { nanoid } from 'nanoid';
+import { clsx } from 'clsx';
+
 import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
-import { Notifications } from '@/components/ Notifications/Notifications.tsx';
 import { useMutation } from '@/hooks/useMutation.ts';
+import { Notifications } from '@/components/ Notifications/Notifications.tsx';
 import { SignInQuery } from '@/features/auth/types/query.ts';
 import { signIn } from '@/features/auth/api/auth.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
-import { nanoid } from 'nanoid';
-import { useNotificationStore, useRegisterStore } from '@/store/store.ts';
+import { useNotificationStore } from '@/store/store.ts';
+
+import styles from './LoginForm.module.scss';
 
 type LoginFormProps = {
 	onSuccess: () => void;
@@ -24,24 +26,14 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	const [password, setPassword] = useState<string>('');
 
 	const addNotification = useNotificationStore((state) => state.addNotification);
-	const registerInfo = useRegisterStore((state) => state.registerInfo);
-	// const changeRegisterInfo = useRegisterStore((state) => state.changeRegisterInfo);
-
-	console.log(registerInfo);
-
 	const signInMutation = useMutation<SignInQuery>(signIn);
 
 	const trySignIn = async () => {
 		const { error } = await signInMutation.mutation({ username, password });
 		if (error) {
-			// if (error.error.content === 'Пользователь не подтвержден') {
-			// 	changeRegisterInfo({username, password})
-			// }
 			const id = nanoid();
-			const notification = { message: 'Неправильный логин или пароль', id };
-
+			const notification = { message: 'Неверный логин или пароль', id };
 			addNotification(notification);
-
 			return;
 		}
 		onSuccess();
@@ -59,7 +51,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 				<BackMark back={() => navigate(-1)} />
 				<div className={styles.header}>
 					<div className={styles.logo}>
-						<img src="../../../../../public/logo.png" />
+						<img src="../../../../../public/logo.svg" alt="logo" />
 					</div>
 					<div className={styles.title}>MilkHunters ID</div>
 				</div>

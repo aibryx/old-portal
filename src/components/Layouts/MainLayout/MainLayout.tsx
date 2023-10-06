@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
+
+import { Notifications } from '@/components/ Notifications/Notifications.tsx';
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { getCurrentUser } from '@/features/users/api/users.ts';
+import { logout } from '@/features/auth/api/auth.ts';
+import { useQuery } from '@/hooks/useQuery.ts';
+import { useMutation } from '@/hooks/useMutation.ts';
+import { BaseResponse } from '@/types';
+
 import styles from './MainLayout.module.scss';
 import 'bulma/css/bulma.min.css';
-import { Notifications } from '@/components/ Notifications/Notifications.tsx';
-import { useQuery } from '@/hooks/useQuery.ts';
-import { getCurrentUser } from '@/features/users/api/users.ts';
-import { BaseResponse } from '@/types';
-import { useMutation } from '@/hooks/useMutation.ts';
-import { logout } from '@/features/auth/api/auth.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 
 type HeaderProps = {
 	isUserDropdownActive: boolean;
@@ -28,10 +30,9 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderP
 
 	const logoutMutation = useMutation(logout);
 	const tryLogout = async () => {
-		const { error, data } = await logoutMutation.mutation(null);
-		console.log(error, data);
-
-		window.location.reload();
+		const { error } = await logoutMutation.mutation(null);
+		if (error) console.error(error.error.content);
+		else window.location.reload();
 	};
 
 	return (
@@ -39,7 +40,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderP
 			<div className={styles.header_layout}>
 				<div className={styles.logo}>
 					<div className={styles.logo_inner}>
-						<img src="../../../../public/logo.png" />
+						<img src="../../../../public/logo.svg" />
 						MilkHunters
 					</div>
 				</div>
@@ -305,8 +306,6 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
 
 	return (
 		<div onClick={() => setIsUserDropdownActive(false)} className={styles.layout_wrapper}>
-			{/*{isLoading && <Spinner />}*/}
-
 			<Header
 				isUserDropdownActive={isUserDropdownActive}
 				setIsUserDropdownActive={setIsUserDropdownActive}

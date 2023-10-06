@@ -15,6 +15,7 @@ type NotificationState = {
 	notifications: Array<NotificationItem>;
 	addNotification: (notification: NotificationItem) => void;
 	deleteNotification: (id: string) => void;
+	deleteAllNotifications: () => void;
 };
 
 type RegisterState = {
@@ -33,6 +34,11 @@ export const useNotificationStore = create<NotificationState>((set) => ({
 	deleteNotification: (id: string) =>
 		set((state: { notifications: Array<NotificationItem> }) => ({
 			notifications: state.notifications.filter((n) => n.id !== id),
+		})),
+
+	deleteAllNotifications: () =>
+		set(() => ({
+			notifications: [],
 		})),
 }));
 

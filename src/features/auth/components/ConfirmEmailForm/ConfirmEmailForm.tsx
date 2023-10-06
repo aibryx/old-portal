@@ -1,16 +1,17 @@
-import styles from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.module.scss';
-import { Form, Formik, FormikErrors } from 'formik';
-import { regex } from '@/lib/regex.ts';
-import { clsx } from 'clsx';
-import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Form, Formik, FormikErrors } from 'formik';
 import { useNavigate } from 'react-router';
+import { clsx } from 'clsx';
+
 import { confirmEmail, sendEmail, signIn } from '@/features/auth/api/auth.ts';
-import { useMutation } from '@/hooks/useMutation.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { displayConfirmEmailFormErrors } from '@/features/auth/utils/displayConfirmEmailFormErrors.ts';
 import { SignInQuery } from '@/features/auth/types/query.ts';
+import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { useMutation } from '@/hooks/useMutation.ts';
 import { useRegisterStore } from '@/store/store.ts';
+import { regex } from '@/lib/regex.ts';
+
+import styles from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.module.scss';
 
 type ConfirmEmailProps = {
 	email: string;
@@ -46,6 +47,15 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 	);
 	const signInMutation = useMutation<SignInQuery>(signIn);
 
+	const sendEmailAndStartTimer = async () => {
+		await sendEmailMutation.mutation(email);
+		setTimer({
+			time: 120,
+			minuts: 2,
+			seconds: 0,
+		});
+	};
+
 	useEffect(() => {
 		const trySendEmail = async (email: string) => {
 			await sendEmailMutation.mutation(email);
@@ -54,17 +64,8 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 	}, [email]);
 
 	useEffect(() => {
-		const trySendEmail = async (email: string) => {
-			await sendEmailMutation.mutation(email);
-		};
 		setTimeout(() => {
 			if (timer.time === 0) {
-				trySendEmail(email);
-				setTimer({
-					time: 120,
-					minuts: 2,
-					seconds: 0,
-				});
 				return;
 			}
 			setTimer({
@@ -100,14 +101,10 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 			<div className={styles.form}>
 				<div className={styles.header}>
 					<div className={styles.logo}>
-						<img src="../../../../../public/logo.png" alt="logo" />
+						<img src="../../../../../public/logo.svg" alt="logo" />
 					</div>
 					<div className={styles.title}>MilkHunters ID</div>
 					<div className={styles.suptitle}>Подтвердите адрес {email}</div>
-					<div className={styles.timer}>
-						Мы отправим новый код через: {timer.minuts}:
-						{timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
-					</div>
 				</div>
 
 				<Formik<CodeForConfirmEmail>
@@ -129,11 +126,14 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 						<Form>
 							<div className={styles.inputs}>
 								<div className={clsx('field', styles.field)}>
-									<label className={clsx('label', styles.label)}>Код</label>
+									<label className={clsx('label', styles.label)}>
+										Код подтверждения
+									</label>
 									<div className={clsx('control', styles.control)}>
 										<input
 											className={clsx(
-												'input ' + `${errors.code ? 'is-danger' : null}`,
+												'input',
+												errors.code && 'is-danger',
 												styles.username
 											)}
 											name="code"
@@ -142,19 +142,20 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 											type="text"
 											placeholder="Введите код для подтверждения адреса электронной почты"
 										/>
-										{errors.code ? (
+										{errors.code && (
 											<p className="help is-danger">{errors.code}</p>
-										) : null}
+										)}
 									</div>
 								</div>
 							</div>
 
-							<div className={styles.register_wrapper}>
+							<div className={styles.confirm_button_wrapper}>
 								<button
 									type="submit"
 									className={clsx(
-										'button is-primary is-disabled',
-										styles.register
+										'button is-primary',
+										!isValid && 'is-disabled',
+										styles.confirm_button
 									)}
 									disabled={
 										!isValid || Object.values(values).some((v) => v === '')
@@ -163,21 +164,21 @@ export const ConfirmEmailForm = ({ email }: ConfirmEmailProps) => {
 									{confirmEmailMutation.isLoading ? <Spinner /> : 'Отправить код'}
 								</button>
 							</div>
+							<div className={styles.timer}>
+								{timer.time ? (
+									<>
+										Вы можете отправить новый код через: {timer.minuts}:
+										{timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
+									</>
+								) : (
+									<a className="is-primary" onClick={sendEmailAndStartTimer}>
+										Отправить код еще раз
+									</a>
+								)}
+							</div>
 						</Form>
 					)}
 				</Formik>
-
-				<div className={styles.to_login}>
-					<span>Есть аккаунт?</span>
-					<NavLink
-						to={'/auth/login'}
-						onClick={() =>
-							changeRegisterInfo({ username: '', email: '', password: '' })
-						}
-					>
-						Войти
-					</NavLink>
-				</div>
 			</div>
 		</div>
 	);

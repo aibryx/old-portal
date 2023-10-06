@@ -1,10 +1,8 @@
-export type SignInQuery = {
-    username: string;
-    password: string;
+export type SignUpQuery = SignInQuery & {
+    email: string;
 };
 
-export type SignUpQuery = {
+export type SignInQuery = {
     username: string;
-    email: string,
     password: string;
 };

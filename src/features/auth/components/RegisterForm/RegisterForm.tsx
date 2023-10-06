@@ -1,53 +1,49 @@
-import styles from './RegisterForm.module.scss';
-import { clsx } from 'clsx';
-import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
+import { Form, Formik, FormikErrors } from 'formik';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { regex } from '@/lib/regex.ts';
-import { Form, Formik, FormikErrors } from 'formik';
-import { signUp } from '@/features/auth/api/auth.ts';
+import { clsx } from 'clsx';
 
+import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
+import { signUp } from '@/features/auth/api/auth.ts';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { displayRegisterFormErrors } from '@/features/auth/utils/displayRegisterFormErrors.ts';
 import { useMutation } from '@/hooks/useMutation.ts';
-import { SignUpQuery } from '@/features/auth/types/query.ts';
 import { useRegisterStore } from '@/store/store.ts';
+import { regex } from '@/lib/regex.ts';
 
-type RegisterForm = {
+import styles from './RegisterForm.module.scss';
+
+type RegisterFormValues = {
 	username: string;
 	email: string;
 	password: string;
 	confirmPassword: string;
 };
 
-export type RegisterErrors = Partial<Record<keyof RegisterForm, string>>;
+type RegisterFormErrors = Partial<Record<keyof RegisterFormValues, string>>;
 
 export const RegisterForm = () => {
 	const navigate = useNavigate();
 
-	const signUpMutation = useMutation<SignUpQuery>(signUp);
+	const signUpMutation = useMutation(signUp);
 	const changeRegisterInfo = useRegisterStore((state) => state.changeRegisterInfo);
-	const registerInfo = useRegisterStore(state => state.registerInfo);
 
-	const initialValues: RegisterForm = {
-		username: 'dwqwq',
-		email: 'qwdq@milkhunters.ru',
-		password: 'Qwerty123',
-		confirmPassword: 'Qwerty123',
+	const initialValues: RegisterFormValues = {
+		username: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
 	};
 
-	console.log(registerInfo);
-
 	const trySignUp = async (
-		values: RegisterForm,
-		setErrors: (errors: FormikErrors<RegisterErrors>) => void
+		values: RegisterFormValues,
+		setErrors: (errors: FormikErrors<RegisterFormErrors>) => void
 	) => {
 		const { error } = await signUpMutation.mutation(values);
 		if (error) {
 			displayRegisterFormErrors(error.error, setErrors);
 			return;
 		}
-		// changeRegisterInfo({username: '', email: 'asd@milkhunters.ru', password: ''})
 		changeRegisterInfo(values);
 	};
 
@@ -58,15 +54,15 @@ export const RegisterForm = () => {
 
 				<div className={styles.header}>
 					<div className={styles.logo}>
-						<img src="../../../../../public/logo.png" alt="logo" />
+						<img src="../../../../../public/logo.svg" alt="logo" />
 					</div>
 					<div className={styles.title}>MilkHunters ID</div>
 				</div>
 
-				<Formik<RegisterForm>
+				<Formik<RegisterFormValues>
 					initialValues={initialValues}
 					validate={(values) => {
-						const errors: RegisterErrors = {};
+						const errors: RegisterFormErrors = {};
 						if (!regex.username.test(values.username) && values.username !== '') {
 							errors.username = 'Невалидное имя пользователя';
 						}
@@ -98,8 +94,8 @@ export const RegisterForm = () => {
 									<div className={clsx('control', styles.control)}>
 										<input
 											className={clsx(
-												'input ' +
-													`${errors.username ? 'is-danger' : null}`,
+												'input',
+												errors.username && 'is-danger',
 												styles.username
 											)}
 											name="username"
@@ -108,9 +104,9 @@ export const RegisterForm = () => {
 											type="text"
 											placeholder="Введите имя пользователя"
 										/>
-										{errors.username ? (
+										{errors.username && (
 											<p className="help is-danger">{errors.username}</p>
-										) : null}
+										)}
 									</div>
 								</div>
 
@@ -121,7 +117,8 @@ export const RegisterForm = () => {
 									<div className={clsx('control', styles.control)}>
 										<input
 											className={clsx(
-												'input ' + `${errors.email ? 'is-danger' : null}`,
+												'input',
+												errors.email && 'is-danger',
 												styles.email
 											)}
 											name="email"
@@ -130,9 +127,9 @@ export const RegisterForm = () => {
 											type="text"
 											placeholder="Введите aдрес электронной почты"
 										/>
-										{errors.email ? (
+										{errors.email && (
 											<p className="help is-danger">{errors.email}</p>
-										) : null}
+										)}
 									</div>
 								</div>
 
@@ -141,8 +138,8 @@ export const RegisterForm = () => {
 									<div className={clsx('control', styles.control)}>
 										<input
 											className={clsx(
-												'input ' +
-													`${errors.password ? 'is-danger' : null}`,
+												'input',
+												errors.password && 'is-danger',
 												styles.password
 											)}
 											name="password"
@@ -151,9 +148,9 @@ export const RegisterForm = () => {
 											type="text"
 											placeholder="Введите пароль"
 										/>
-										{errors.password ? (
+										{errors.password && (
 											<p className="help is-danger">{errors.password}</p>
-										) : null}
+										)}
 									</div>
 								</div>
 
@@ -164,10 +161,8 @@ export const RegisterForm = () => {
 									<div className={clsx('control', styles.control)}>
 										<input
 											className={clsx(
-												'input ' +
-													`${
-														errors.confirmPassword ? 'is-danger' : null
-													}`,
+												'input',
+												errors.confirmPassword && 'is-danger',
 												styles.confirm_password
 											)}
 											name="confirmPassword"
@@ -176,11 +171,11 @@ export const RegisterForm = () => {
 											type="text"
 											placeholder="Повторите пароль"
 										/>
-										{errors.confirmPassword ? (
+										{errors.confirmPassword && (
 											<p className="help is-danger">
 												{errors.confirmPassword}
 											</p>
-										) : null}
+										)}
 									</div>
 								</div>
 							</div>
@@ -188,7 +183,11 @@ export const RegisterForm = () => {
 							<div className={styles.register_wrapper}>
 								<button
 									type="submit"
-									className={clsx('button is-primary', styles.register)}
+									className={clsx(
+										'button is-primary',
+										!isValid && 'is-disabled',
+										styles.register
+									)}
 									disabled={
 										!isValid || Object.values(values).some((v) => v === '')
 									}

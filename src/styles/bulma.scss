@@ -16,7 +16,6 @@ a {
 }
 
 // Scroll Bar
-
 ::-webkit-scrollbar {
 	width: 7px;
 	background-color: #f9f9fd;
@@ -31,11 +30,8 @@ a {
 ::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
-	//background-color: #f9f9fd;
 	border: 10px solid transparent;
 }
-
-$radius: $app-main-radius;
 
 // FlatIcons Global Options
 .fi {
@@ -43,6 +39,9 @@ $radius: $app-main-radius;
 	align-items: center;
 	justify-content: center;
 }
+
+// Sizes
+$radius: $app-main-radius;
 
 // Colors
 $primary: $app-primary-color;

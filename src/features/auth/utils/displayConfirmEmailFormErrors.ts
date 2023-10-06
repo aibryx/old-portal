@@ -6,7 +6,6 @@ export const displayConfirmEmailFormErrors = (
 	setErrors: <T>(errors: FormikErrors<T>) => void
 ) => {
 	const { content } = error;
-	console.log(content);
 	if (typeof content === 'string') {
 		setErrors({ code: content });
 	}

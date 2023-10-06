@@ -5,7 +5,11 @@ import { useEffect } from 'react';
 
 export const Notifications = () => {
 	const notifications = useNotificationStore((state) => state.notifications);
+	const deleteAllNotifications = useNotificationStore((state) => state.deleteAllNotifications);
 
+	useEffect(() => {
+		return () => deleteAllNotifications();
+	}, []);
 	return (
 		<div className={styles.notifications}>
 			{notifications.map((notification) => (
@@ -27,7 +31,10 @@ const NotificationWithAutoRemove = ({ message, id }: NotificationItem) => {
 			removeNotification(id);
 		}, 5000);
 
-		return () => clearTimeout(timer);
+		return () => {
+			console.log('Unmount here!')
+			clearTimeout(timer);
+		};
 	}, [id, removeNotification]);
 
 	return (

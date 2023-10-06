@@ -6,7 +6,6 @@ export const displayRegisterFormErrors = (
 	setErrors: <T>(errors: FormikErrors<T>) => void
 ) => {
 	const { content } = error;
-	console.log(content);
 	if (typeof content === 'string') {
 		const errorField = content.split(' ').includes('email') ? 'email' : 'username';
 		setErrors({ [errorField]: content });

@@ -1,7 +1,8 @@
-import { NotificationItem, useNotificationStore } from '@/store/store.ts';
-import { Notification } from '@/components/ Notifications/Notification/Notification.tsx';
-import styles from './Notifications.module.scss';
 import { useEffect } from 'react';
+import { NotificationItem, useNotificationStore } from '@/stores/notifications';
+
+import { Notification } from '@/components/ Notifications/Notification';
+import styles from './Notifications.module.scss';
 
 export const Notifications = () => {
 	const notifications = useNotificationStore((state) => state.notifications);

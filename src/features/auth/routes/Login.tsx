@@ -1,4 +1,4 @@
-import { LoginForm } from '../components/LoginForm/LoginForm.jsx';
+import { LoginForm } from '../components/LoginForm';
 import { useNavigate } from 'react-router';
 
 export const Login = () => {

@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { Suspense, useEffect } from 'react';
 import { MainLayout } from '../MainLayout/MainLayout.tsx';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { Spinner } from "@/components/Elements/Spinner";
 
 export const AppEnter = () => {
 	const navigate = useNavigate();
@@ -16,9 +16,7 @@ export const AppEnter = () => {
 		<MainLayout>
 			<Suspense
 				fallback={
-					<>
-						<Spinner />
-					</>
+						<Spinner/>
 				}
 			>
 				<Outlet />

@@ -1,4 +1,4 @@
-import { AppEnter } from '../components/Layouts/AppEnter/AppEnter.tsx';
+import { AppEnter } from "@/components/Layouts/AppEnter";
 
 export const protectedRoutes = [
 	{

@@ -1,6 +1,6 @@
-import { RegisterForm } from '../components/RegisterForm/RegisterForm.jsx';
-import { ConfirmEmailForm } from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.tsx';
-import { useRegisterStore } from "@/store/store.ts";
+import { RegisterForm } from '../components/RegisterForm';
+import { ConfirmEmailForm } from '@/features/auth/components/ConfirmEmailForm';
+import { useRegisterStore } from "@/stores/registerData";
 
 export const Register = () => {
 	const email = useRegisterStore(state => state.registerInfo.email);

@@ -39,7 +39,6 @@
 	label {
 		font-size: 18px;
 	}
-	overflow-y: auto;
 }
 
 .control {
@@ -103,6 +102,7 @@
 		padding: 30px;
 		height: 100vh;
 		border-radius: 0;
+		//overflow-y: auto;
 	}
 
 	.to_register {

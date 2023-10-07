@@ -6,9 +6,9 @@ import { clsx } from 'clsx';
 import { confirmEmail, sendEmail, signIn } from '@/features/auth/api/auth.ts';
 import { displayConfirmEmailFormErrors } from '@/features/auth/utils/displayConfirmEmailFormErrors.ts';
 import { SignInQuery } from '@/features/auth/types/query.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
+import { Spinner } from '@/components/Elements/Spinner';
 import { useMutation } from '@/hooks/useMutation.ts';
-import { useRegisterStore } from '@/store/store.ts';
+import { useRegisterStore } from '@/stores/registerData';
 import { regex } from '@/lib/regex.ts';
 
 import styles from '@/features/auth/components/ConfirmEmailForm/ConfirmEmailForm.module.scss';

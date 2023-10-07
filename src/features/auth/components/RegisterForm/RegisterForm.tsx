@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { clsx } from 'clsx';
 
-import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
-import { signUp } from '@/features/auth/api/auth.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
-import { displayRegisterFormErrors } from '@/features/auth/utils/displayRegisterFormErrors.ts';
-import { useMutation } from '@/hooks/useMutation.ts';
-import { useRegisterStore } from '@/store/store.ts';
-import { regex } from '@/lib/regex.ts';
+import { BackMark } from '@/components/Elements/BackMark';
+import { signUp } from '@/features/auth/api/auth';
+import { Spinner } from '@/components/Elements/Spinner';
+import { displayRegisterFormErrors } from '@/features/auth/utils/displayRegisterFormErrors';
+import { useMutation } from '@/hooks/useMutation';
+import { useRegisterStore } from '@/stores/registerData';
+import { regex } from '@/lib/regex';
 
 import styles from './RegisterForm.module.scss';
 

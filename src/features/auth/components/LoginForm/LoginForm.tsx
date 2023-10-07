@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router';
 import { nanoid } from 'nanoid';
 import { clsx } from 'clsx';
 
-import { BackMark } from '@/components/Elements/BackMark/BackMark.tsx';
+import { BackMark } from '@/components/Elements/BackMark';
 import { useMutation } from '@/hooks/useMutation.ts';
 import { Notifications } from '@/components/ Notifications/Notifications.tsx';
 import { SignInQuery } from '@/features/auth/types/query.ts';
 import { signIn } from '@/features/auth/api/auth.ts';
-import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
-import { useNotificationStore } from '@/store/store.ts';
+import { Spinner } from '@/components/Elements/Spinner';
+import { useNotificationStore } from '@/stores/notifications';
 
 import styles from './LoginForm.module.scss';
 

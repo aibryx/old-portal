@@ -1,5 +1,5 @@
-import { AuthRoutes } from '../features/auth/routes/AuthRoutes.tsx';
-import { AppEnter } from '../components/Layouts/AppEnter/AppEnter.tsx';
+import { AppEnter } from "@/components/Layouts/AppEnter";
+import { AuthRoutes } from "@/features/auth";
 
 export const publicRoutes = [
 	{

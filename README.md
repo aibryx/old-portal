@@ -1,4 +1,4 @@
-<h1 align="center">MilkHunters Portal</h1><br>
+<h1 align="center">MilkHunters Portal</h1>
 
 <p align="center">
   <a href="https://nodejs.org/">

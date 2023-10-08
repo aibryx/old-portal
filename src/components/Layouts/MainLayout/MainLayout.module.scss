@@ -166,11 +166,13 @@
 // View
 .view {
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	//justify-content: center;
+	//align-items: center;
 	grid-area: view;
 	//border: 1px solid black;
 	height: 100%;
+	padding: 10px 0;
+	overflow-y: auto;
 }
 
 // Live

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { clsx } from 'clsx';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import { Notifications } from '@/components/ Notifications/Notifications.tsx';
+import { Notifications } from '@/components/Notifications/Notifications.tsx';
 import { Spinner } from '@/components/Elements/Spinner/Spinner.tsx';
 import { getCurrentUser } from '@/features/users/api/users.ts';
 import { logout } from '@/features/auth/api/auth.ts';
@@ -20,6 +20,7 @@ type HeaderProps = {
 };
 
 const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderProps) => {
+	const navigate = useNavigate();
 	let userDropdownClass = '';
 	if (isUserDropdownActive) userDropdownClass += 'is-active';
 
@@ -32,7 +33,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderP
 	const tryLogout = async () => {
 		const { error } = await logoutMutation.mutation(null);
 		if (error) console.error(error.error.content);
-		else window.location.reload();
+		else navigate('/auth/login');
 	};
 
 	return (
@@ -40,7 +41,7 @@ const Header = ({ isUserDropdownActive, setIsUserDropdownActive, user }: HeaderP
 			<div className={styles.header_layout}>
 				<div className={styles.logo}>
 					<div className={styles.logo_inner}>
-						<img src="../../../../public/logo.svg" />
+						<img src="../../../../public/logo.svg" alt="main logo"/>
 						MilkHunters
 					</div>
 				</div>

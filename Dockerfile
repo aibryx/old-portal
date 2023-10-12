@@ -1,15 +1,14 @@
-ARG MODE=production
-ARG VITE_API_BASE_URL=same-base-url
-
-ENV VITE_API_BASE_URL=%VITE_API_BASE_URL
-
 FROM node:18.17.0-alpine as build
 
-ARG MODE
+ARG MODE=production
+ARG VITE_API_URL
 
 WORKDIR /app
 
 COPY . /app
+
+RUN echo "VITE_API_BASE_URL=${VITE_API_URL}" > /app/.env
+
 RUN npm install
 
 ENV NODE_ENV $MODE

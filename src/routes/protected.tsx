@@ -15,6 +15,6 @@ export const protectedRoutes = [
 	},
 	{
 		path: '/new',
-		element: <>FooBar</>,
+		element: <>New Post</>,
 	},
 ];

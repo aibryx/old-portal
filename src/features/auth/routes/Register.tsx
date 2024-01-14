@@ -5,5 +5,7 @@ import { useRegisterStore } from "@/stores/registerData";
 export const Register = () => {
 	const email = useRegisterStore(state => state.registerInfo.email);
 
+
 	return email ? <ConfirmEmailForm email={email}/> : <RegisterForm/>;
+
 };
